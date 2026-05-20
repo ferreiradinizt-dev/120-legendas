@@ -1,0 +1,2249 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>120 Legendas — BR Auto Peças</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0c0c0c;--card:#141414;--border:#252525;--gold:#FFD600;--gold-dim:#FFD60018;--orange:#FF6B00;--white:#F2EDE4;--gray:#777;--light:#bbb;--red:#FF3B3B;--green:#00D68F;--blue:#4D9FFF;--purple:#A855F7;--pink:#FF6B9D;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--white);font-family:'Syne',sans-serif;min-height:100vh;}
+  header{padding:50px 40px 36px;border-bottom:1px solid var(--border);position:relative;overflow:hidden;}
+  header::after{content:'120';position:absolute;right:-10px;top:-20px;font-family:'Bebas Neue',sans-serif;font-size:200px;color:var(--gold-dim);pointer-events:none;line-height:1;}
+  .header-tag{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-bottom:12px;}
+  h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(44px,7vw,80px);line-height:.95;letter-spacing:1px;}
+  h1 span{color:var(--gold);}
+  .header-sub{margin-top:14px;color:var(--gray);font-size:14px;max-width:520px;line-height:1.6;}
+  .stats{display:flex;gap:24px;flex-wrap:wrap;margin-top:20px;}
+  .stat{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--light);font-family:'JetBrains Mono',monospace;}
+  .stat-dot{width:8px;height:8px;border-radius:50%;background:var(--gold);}
+  .search-wrap{padding:16px 40px 0;}
+  .search-input{width:100%;max-width:400px;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:10px 16px;color:var(--white);font-family:'Syne',sans-serif;font-size:14px;outline:none;transition:border-color .2s;}
+  .search-input:focus{border-color:var(--gold);}
+  .search-input::placeholder{color:var(--gray);}
+  .filters{display:flex;gap:8px;flex-wrap:wrap;padding:16px 40px;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--bg);z-index:100;}
+  .filter-btn{padding:7px 14px;border-radius:100px;font-size:11px;font-weight:700;letter-spacing:.5px;cursor:pointer;border:1px solid var(--border);background:transparent;color:var(--gray);transition:all .2s;font-family:'JetBrains Mono',monospace;white-space:nowrap;}
+  .filter-btn:hover,.filter-btn.active{background:var(--gold);color:var(--bg);border-color:var(--gold);}
+  #copy-toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--gold);color:var(--bg);padding:12px 24px;border-radius:100px;font-size:13px;font-weight:700;font-family:'JetBrains Mono',monospace;transition:transform .3s cubic-bezier(.34,1.56,.64,1);z-index:9999;pointer-events:none;}
+  #copy-toast.show{transform:translateX(-50%) translateY(0);}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:16px;padding:32px 40px;}
+  .legend-card{background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;transition:border-color .2s,transform .2s;cursor:pointer;}
+  .legend-card:hover{border-color:var(--gold);transform:translateY(-3px);}
+  .card-top{padding:18px 20px 14px;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;justify-content:space-between;gap:12px;}
+  .card-num{font-family:'Bebas Neue',sans-serif;font-size:32px;color:var(--gold);line-height:1;flex-shrink:0;}
+  .card-meta{flex:1;}
+  .card-category{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;margin-bottom:5px;}
+  .card-hook{font-size:14px;font-weight:800;color:var(--white);line-height:1.3;}
+  .copy-btn{flex-shrink:0;width:34px;height:34px;border-radius:8px;background:var(--border);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--gray);font-size:14px;transition:all .2s;}
+  .copy-btn:hover{background:var(--gold);color:var(--bg);}
+  .card-body{padding:18px 20px;}
+  .legend-text{font-size:13px;color:var(--light);line-height:1.7;white-space:pre-wrap;}
+  .legend-text .hook-line{font-weight:800;color:var(--white);font-size:14px;}
+  .legend-text .cta-line{color:var(--green);font-weight:700;}
+  .no-results{padding:60px 40px;text-align:center;color:var(--gray);font-size:15px;}
+  @media(max-width:600px){header{padding:36px 20px 28px;}.filters{padding:12px 20px;}.grid{padding:20px;gap:12px;}.search-wrap{padding:12px 20px 0;}}
+  ::-webkit-scrollbar{width:5px;}::-webkit-scrollbar-track{background:var(--bg);}::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px;}
+</style>
+</head>
+<body>
+<div id="copy-toast">✓ Legenda copiada!</div>
+<header>
+  <div class="header-tag">// BR Auto Peças · Conteúdo Completo</div>
+  <h1>120 LEGENDAS<br><span>PRONTAS</span></h1>
+  <p class="header-sub">Clique em qualquer card para copiar a legenda completa. Auto peças, finanças, mentalidade, economia e muito mais — conteúdo que prende e converte.</p>
+  <div class="stats">
+    <div class="stat"><div class="stat-dot"></div>120 legendas</div>
+    <div class="stat"><div class="stat-dot" style="background:var(--green)"></div>7 categorias</div>
+    <div class="stat"><div class="stat-dot" style="background:var(--blue)"></div>Clique para copiar</div>
+  </div>
+</header>
+<div class="search-wrap">
+  <input class="search-input" type="text" placeholder="🔍 Buscar legenda por palavra-chave..." oninput="searchCards(this.value)">
+</div>
+<div class="filters">
+  <button class="filter-btn active" onclick="filterCards('all',this)">Todos (120)</button>
+  <button class="filter-btn" onclick="filterCards('carro',this)">🔧 Auto Peças (40)</button>
+  <button class="filter-btn" onclick="filterCards('dinheiro',this)">💸 Dinheiro (15)</button>
+  <button class="filter-btn" onclick="filterCards('imposto',this)">🧾 Impostos (10)</button>
+  <button class="filter-btn" onclick="filterCards('mentalidade',this)">🧠 Mentalidade (15)</button>
+  <button class="filter-btn" onclick="filterCards('economia',this)">📊 Economia (10)</button>
+  <button class="filter-btn" onclick="filterCards('comportamento',this)">😤 Comportamento (10)</button>
+  <button class="filter-btn" onclick="filterCards('viral',this)">🔥 Viral (20)</button>
+</div>
+<div class="grid" id="grid"></div>
+<script id="data-script">
+const legends = [
+// ── CARRO (40) ──────────────────────────────────────────────
+{num:1,cat:"carro",catLabel:"🔧 Auto Peças",hook:"Você faz seu carro perder valor e nem percebe",text:`Você faz seu carro perder valor e nem percebe.
+
+Existe uma lista de coisas que derrubam o valor de revenda silenciosamente — e a maioria dos motoristas faz pelo menos 3 delas todo mês.
+
+→ Não trocar o óleo no prazo certo
+→ Ignorar o alinhamento e balanceamento
+→ Deixar a pintura sem proteção
+→ Usar peças de procedência duvidosa
+→ Não guardar os comprovantes de manutenção
+
+Um carro bem mantido pode valer até 30% a mais na hora da venda.
+
+📍 Goianésia e São Luís do Norte
+📲 Chama no WhatsApp — link na bio
+
+#autopecas #carros #manutencao #dicas #goianesia`},
+
+{num:2,cat:"carro",catLabel:"🔧 Auto Peças",hook:"Esse erro simples pode te custar R$ 3.000",text:`Esse erro simples pode te custar R$ 3.000.
+
+Ignorar a troca de óleo no prazo certo é o erro número 1 dos motoristas brasileiros.
+
+O que acontece quando você atrasa:
+→ O óleo perde viscosidade e para de lubrificar
+→ As peças do motor começam a se desgastar acelerado
+→ Em casos graves, o motor trava
+
+A troca de óleo custa em média R$ 80 a R$ 200.
+O conserto do motor: R$ 3.000 a R$ 15.000.
+
+A escolha é sua.
+
+📍 Goianésia e São Luís do Norte
+📲 Link na bio
+
+#manutencao #oleo #motor #autopecas #goianesia`},
+
+{num:3,cat:"carro",catLabel:"🔧 Auto Peças",hook:"Tem uma peça no seu carro que vai te dar um prejuízo enorme em breve",text:`Tem uma peça no seu carro que vai te dar um prejuízo enorme em breve.
+
+A correia dentada.
+
+Ela tem prazo de validade. E quando estoura, destrói o motor inteiro.
+
+→ Troca recomendada: entre 60.000 e 100.000 km
+→ Custo da correia: R$ 80 a R$ 250
+→ Custo do motor destruído: R$ 4.000 a R$ 20.000
+
+Se você não sabe quando trocou a última vez — esse post é pra você.
+
+📍 Goianésia e São Luís do Norte
+📲 Chama agora — link na bio
+
+#correia #motor #autopecas #manutencao #goianesia`},
+
+{num:4,cat:"carro",catLabel:"🔧 Auto Peças",hook:"O que a concessionária não quer que você saiba",text:`O que a concessionária não quer que você saiba.
+
+A margem de lucro de peças em concessionárias pode chegar a 200%.
+
+Você pode pagar R$ 300 por uma peça que custa R$ 100 numa loja especializada — com a mesma qualidade, mesmo fabricante, mesma garantia.
+
+A diferença é só a embalagem com o logo da montadora.
+
+Você não precisa fazer revisão na concessionária para manter a garantia. O CDC garante isso.
+
+📍 Goianésia e São Luís do Norte
+📲 Peça seu orçamento — link na bio
+
+#pecas #concessionaria #autopecas #economia #goianesia`},
+
+{num:5,cat:"carro",catLabel:"🔧 Auto Peças",hook:"Nunca ignore essa luz no painel — nunca",text:`Nunca ignore essa luz no painel — nunca.
+
+A luz de check engine acendeu. O que a maioria faz: apaga e continua.
+
+O que ela pode indicar:
+→ Sensor de oxigênio com defeito — aumenta consumo em 40%
+→ Injeção eletrônica falhando — perda total de potência
+→ Problema na ignição — carro pode parar a qualquer momento
+
+Não dá pra saber sem diagnóstico. O que dói é ignorar e descobrir tarde demais.
+
+📍 Goianésia e São Luís do Norte
+📲 Chama a gente — link na bio
+
+#checkengine #carro #autopecas #goianesia #manutencao`},
+
+{num:6,cat:"carro",catLabel:"🔧 Auto Peças",hook:"Isso dentro do seu carro pode te matar e custa R$ 30 trocar",text:`Isso dentro do seu carro pode te matar e custa R$ 30 trocar.
+
+Pastilha de freio desgastada.
+
+O que acontece quando a pastilha acaba:
+→ A distância de frenagem aumenta drasticamente
+→ O disco aquece demais e pode rachar
+→ Carro que não para quando precisa
+
+Pastilha: R$ 30 a R$ 90.
+Disco por desgaste: R$ 200 a R$ 600.
+Acidente: sem preço.
+
+📍 Goianésia e São Luís do Norte
+📲 Link na bio — atendemos agora
+
+#freio #pastilha #seguranca #autopecas #goianesia`},
+
+{num:7,cat:"carro",catLabel:"🔧 Auto Peças",hook:"Ninguém te conta isso quando você compra um carro usado",text:`Ninguém te conta isso quando você compra um carro usado.
+
+Antes de fechar qualquer compra, verifica essas 7 coisas:
+
+1. Óleo — cor escura demais = manutenção negligenciada
+2. Água do radiador — cor enferrujada = problema interno
+3. Borra embaixo da tampa do óleo = motor comprometido
+4. Suspensão — aperta a frente e solta, não pode chacoalhar
+5. Freio — pedal não pode afundar lentamente com carro parado
+6. Correia dentada — exige comprovante de troca
+7. Histórico de batida — irregularidade na borracha das portas = repintura
+
+Carro bonito por fora pode estar destruído por dentro.
+
+📍 Goianésia e São Luís do Norte
+📲 Link na bio
+
+#carroUsado #autopecas #dicas #goianesia`},
+
+{num:8,cat:"carro",catLabel:"🔧 Auto Peças",hook:"Tem uma falha silenciosa que causa a maioria dos acidentes nas estradas",text:`Tem uma falha silenciosa que causa a maioria dos acidentes nas estradas.
+
+Pneu.
+
+Não o furo dramático. A degradação que você não vê.
+
+O que mata em estrada:
+→ Pneu com mais de 5 anos — borracha racha por dentro
+→ Calibragem incorreta — superaquece e estoura
+→ Sulco abaixo de 1,6mm — aquaplanagem garantida
+
+Como verificar a data: olha os 4 números no pneu. Ex: 1223 = 12ª semana de 2023.
+
+Mais de 5 anos ou sulco raso? Troca agora.
+
+📍 Goianésia e São Luís do Norte
+📲 Link na bio
+
+#pneus #seguranca #autopecas #goianesia`},
+
+{num:9,cat:"carro",catLabel:"🔧 Auto Peças",hook:"Seu carro tem mais de 100 mil km? Então lê isso",text:`Seu carro tem mais de 100 mil km? Então lê isso.
+
+O que deve ser revisado ao atingir 100.000 km:
+
+✅ Correia dentada — se não trocou, é urgente
+✅ Velas de ignição — potência e consumo agradecem
+✅ Amortecedores — após 80.000 km perdem eficiência
+✅ Fluido de freio — a cada 2 anos ou 40.000 km
+✅ Filtro de combustível — melhora desempenho imediatamente
+✅ Mangueiras do radiador — borracha envelhece e racha
+
+Me manda o modelo — faço o orçamento na hora.
+
+📍 Goianésia e São Luís do Norte
+📲 Link na bio
+
+#revisao #autopecas #goianesia #manutencao`},
+
+{num:10,cat:"carro",catLabel:"🔧 Auto Peças",hook:"A peça mais importante do seu carro — e a mais ignorada",text:`A peça mais importante do seu carro — e a mais ignorada.
+
+Não é o motor. Não é o câmbio.
+
+É o fluido de freio.
+
+→ O freio funciona por pressão hidráulica
+→ O fluido absorve umidade ao longo do tempo
+→ Com umidade, o ponto de ebulição cai
+→ Freio que ferve = pedal afunda = você não para
+
+Por que é ignorado: não tem luz de aviso específica. Ninguém fala nas revisões.
+
+Troca: a cada 2 anos ou 40.000 km.
+
+📍 Goianésia e São Luís do Norte
+📲 Temos fluido para todos os modelos — link na bio
+
+#freio #fluido #seguranca #autopecas #goianesia`},
+
+{num:11,cat:"carro",catLabel:"🔧 Auto Peças",hook:"Todo mecânico sabe disso. O motorista médio não sabe",text:`Todo mecânico sabe disso. O motorista médio não sabe.
+
+5 verdades do mercado automotivo:
+
+1. O preço da mão de obra sobe quando a peça é ruim
+2. Carro bem documentado vale até 20% a mais na revenda
+3. Revisão em loja especializada tem a mesma validade que na concessionária
+4. O maior custo é sempre o adiamento — não a peça em si
+5. Mecânico de confiança + loja de confiança = combinação imbatível
+
+Segue a gente. A gente compartilha o que sabe.
+
+📍 Goianésia e São Luís do Norte
+📲 Link na bio
+
+#mecanico #autopecas #goianesia #conhecimento`},
+
+{num:12,cat:"carro",catLabel:"🔧 Auto Peças",hook:"Carro parado por mais de 30 dias? Lê isso antes de ligar",text:`Carro parado por mais de 30 dias? Lê isso antes de ligar.
+
+Antes de dar a partida, verifica:
+
+1. Bateria — pode ter descarregado completamente
+2. Pneus — perdem pressão parados
+3. Freio de mão — pode ter travado
+4. Nível de óleo — verifica antes de ligar
+5. Combustível — gasolina parada mais de 60 dias se degrada
+6. Mangueiras — verifica se não ressecaram
+
+Carro parado precisa de atenção redobrada.
+
+📍 Goianésia e São Luís do Norte
+📲 Qualquer dúvida, chama — link na bio
+
+#carroparado #manutencao #autopecas #goianesia`},
+
+{num:13,cat:"carro",catLabel:"🔧 Auto Peças",hook:"Se você faz isso, seu carro te odeia",text:`Se você faz isso, seu carro te odeia.
+
+5 hábitos que destroem o carro por dentro silenciosamente:
+
+1. Andar com tanque no reserva — bomba de combustível superaquece
+2. Frear em descidas sem usar motor-freio — aquece disco e pastilha
+3. Passar por quebra-mola em velocidade — destroça amortecedor e bandeja
+4. Ligar o ar no máximo logo de cara — sobrecarrega o compressor
+5. Ignorar o alinhamento — desgasta pneu de forma irregular
+
+Qual você confessa que faz? 👇
+
+📍 Goianésia e São Luís do Norte
+📲 Link na bio
+
+#carro #habitos #autopecas #goianesia`},
+
+{num:14,cat:"carro",catLabel:"🔧 Auto Peças",hook:"O verão destrói silenciosamente essa parte do seu carro",text:`O verão destrói silenciosamente essa parte do seu carro.
+
+O sistema de arrefecimento.
+
+O calor extremo é o maior inimigo do motor. E o verão brasileiro não perdoa.
+
+→ Líquido de arrefecimento se degrada mais rápido no calor
+→ Mangueiras ressecam e podem rachar
+→ Radiador entope mais rápido
+→ Bomba d'água trabalha sob mais pressão
+
+Sinais de alerta: temperatura subindo, cheiro de queimado, vaporzinho do capô.
+
+📍 Goianésia e São Luís do Norte
+📲 Temos tudo para o sistema de arrefecimento — link na bio
+
+#verao #motor #arrefecimento #autopecas #goianesia`},
+
+{num:15,cat:"carro",catLabel:"🔧 Auto Peças",hook:"A maioria dos motoristas ignora esse sinal até ser tarde demais",text:`A maioria dos motoristas ignora esse sinal até ser tarde demais.
+
+A luz do óleo acendeu. O que a maioria faz: apaga e segue.
+
+Por que é grave:
+→ Sem pressão de óleo, o motor opera sem lubrificação
+→ Em menos de 60 segundos as peças internas começam a se fundir
+→ Em 5 minutos: dano irreversível
+→ Conserto: R$ 5.000 ou motor trocado
+
+Qualquer causa tem solução simples — se pegar cedo.
+
+📍 Goianésia e São Luís do Norte
+📲 Chama antes de ligar o carro — link na bio
+
+#motor #oleo #autopecas #goianesia`},
+
+{num:16,cat:"carro",catLabel:"🔧 Auto Peças",hook:"Esse barulho no carro significa que você está em perigo",text:`Esse barulho no carro significa que você está em perigo.
+
+Barulhos que nunca devem ser ignorados:
+
+🔴 Metal raspando ao frear → pastilha zerada
+🔴 Estalo na suspensão em curvas → pivô ou bandeja danificada
+🔴 Ronco no volante → rolamento de roda com problema
+🔴 Batida no motor ao acelerar → detonação — sinal grave
+🔴 Sibilo constante no motor → correia ou tensionador falhando
+
+Cada som é o carro pedindo socorro. Quanto mais ignora, mais caro fica.
+
+📍 Goianésia e São Luís do Norte
+📲 Descreve o barulho pra gente — link na bio
+
+#seguranca #carro #autopecas #manutencao #goianesia`},
+
+{num:17,cat:"carro",catLabel:"🔧 Auto Peças",hook:"Comprei uma peça por R$ 20 que salvou meu motor de R$ 8.000",text:`Comprei uma peça por R$ 20 que salvou meu motor de R$ 8.000.
+
+O filtro de óleo.
+
+Quando ele entope ou falha:
+→ Impurezas circulam livres pelo motor
+→ Desgaste acelerado de bronzinas e pistões
+→ Em casos extremos: motor fundido
+
+Custo do filtro: R$ 15 a R$ 60.
+Custo da retífica do motor: R$ 3.000 a R$ 8.000.
+
+Troca junto com o óleo. Sempre. Sem exceção.
+
+📍 Goianésia e São Luís do Norte
+📲 Link na bio
+
+#filtro #motor #autopecas #manutencao #goianesia`},
+
+{num:18,cat:"carro",catLabel:"🔧 Auto Peças",hook:"A diferença entre quem gasta R$ 500 e quem gasta R$ 5.000 no carro por ano",text:`A diferença entre quem gasta R$ 500 e quem gasta R$ 5.000 no carro por ano.
+
+Não é o modelo. Não é sorte. É comportamento.
+
+Quem gasta R$ 500:
+→ Segue o manual de manutenção
+→ Compra peça de qualidade com garantia
+→ Resolve pequenos problemas antes de virarem grandes
+
+Quem gasta R$ 5.000:
+→ Só olha pro carro quando quebra
+→ Ignora sinais de alerta por meses
+→ Paga mão de obra múltiplas vezes pelo mesmo problema
+
+Manutenção preventiva sempre sai mais barata que a corretiva.
+
+📍 Goianésia e São Luís do Norte
+📲 Link na bio
+
+#economia #carro #manutencao #autopecas #goianesia`},
+
+{num:19,cat:"carro",catLabel:"🔧 Auto Peças",hook:"O mecânico me contou algo que ele não conta para os clientes",text:`O mecânico me contou algo que ele não conta para os clientes.
+
+"Eu sei quando o cliente não vai voltar. É quando ele compra peça barata sem procedência."
+
+→ Peça ruim volta em 3 meses com o mesmo problema
+→ Já causou dano em volta — a conta é maior
+→ O cliente culpa o serviço, mas o problema foi a peça
+
+A economia falsa de R$ 50 pode te custar R$ 800 no mês seguinte.
+
+📍 Goianésia e São Luís do Norte
+📲 Link na bio
+
+#mecanico #pecas #autopecas #qualidade #goianesia`},
+
+{num:20,cat:"carro",catLabel:"🔧 Auto Peças",hook:"Você cuida do seu carro ou só abastece?",text:`Você cuida do seu carro ou só abastece?
+
+Motorista descuidado:
+→ Só olha pro carro quando algo quebra
+→ Troca óleo "quando lembra"
+→ Ignora barulhos estranhos por meses
+→ Gasta 3x mais em consertos
+
+Motorista inteligente:
+→ Segue o calendário do manual
+→ Faz revisão preventiva a cada 10.000 km
+→ Conhece os sinais de alerta
+→ Compra peça com nota e garantia
+
+Qual tipo você quer ser?
+
+📍 Goianésia e São Luís do Norte
+📲 A gente te ajuda — link na bio
+
+#manutencao #carro #autopecas #goianesia`},
+
+{num:21,cat:"carro",catLabel:"🔧 Auto Peças",hook:"Essa peça tem vida útil e a sua pode ter vencido",text:`Essa peça tem vida útil e a sua pode ter vencido.
+
+O que provavelmente está vencido no seu carro agora:
+
+→ Correia dentada: 60.000 a 100.000 km
+→ Fluido de freio: 2 anos ou 40.000 km
+→ Velas de ignição: 20.000 a 60.000 km
+→ Filtro de ar: 15.000 a 20.000 km
+→ Filtro de combustível: 30.000 a 40.000 km
+→ Amortecedores: 80.000 km
+
+Me manda o modelo — te passo o orçamento na hora.
+
+📍 Goianésia e São Luís do Norte
+📲 Link na bio
+
+#revisao #pecas #autopecas #goianesia`},
+
+{num:22,cat:"carro",catLabel:"🔧 Auto Peças",hook:"Em anos de loja, esse é o erro mais comum que vejo",text:`Em anos de loja, esse é o erro mais comum que vejo.
+
+Trocar a peça certa na ordem errada.
+
+Exemplos clássicos:
+→ Amortecedor novo sem alinhar depois → pneu acaba em 10.000 km
+→ Pastilha nova sem retificar disco empenado → dura metade do tempo
+→ Bateria nova sem verificar o alternador → descarrega em semanas
+
+Peça certa + sequência certa = problema resolvido de vez.
+
+Conta o histórico completo quando chegar aqui. A gente indica o que precisa.
+
+📍 Goianésia e São Luís do Norte
+📲 Link na bio
+
+#autopecas #dicas #manutencao #goianesia`},
+
+{num:23,cat:"carro",catLabel:"🔧 Auto Peças",hook:"Esse conselho vai contra tudo que te ensinaram sobre carro",text:`Esse conselho vai contra tudo que te ensinaram sobre carro.
+
+"Esquenta o motor antes de sair."
+
+Mito. No carro moderno, isso não existe mais.
+
+O que fazer:
+→ Liga o carro
+→ Espera 30 segundos para o óleo circular
+→ Sai em marcha leve, sem acelerar forte
+→ Nos primeiros 2-3 km, evita aceleração brusca
+
+Ficar parado esquentando desperdiça combustível e aumenta desgaste com motor frio.
+
+📍 Goianésia e São Luís do Norte
+📲 Link na bio
+
+#mito #carro #motor #autopecas #goianesia`},
+
+{num:24,cat:"carro",catLabel:"🔧 Auto Peças",hook:"Por que mecânico bom nunca fica sem cliente",text:`Por que mecânico bom nunca fica sem cliente.
+
+Carro sempre vai quebrar. A demanda nunca some.
+
+O que diferencia quem tem fila de espera:
+→ Transparência: mostra o problema, explica a causa
+→ Usa peça de procedência — o serviço não volta com o mesmo defeito
+→ Cumpre prazo — confiança é tudo
+→ Trabalha com fornecedor de confiança
+
+Se você é mecânico: a gente é seu parceiro. Me chama.
+
+📍 Goianésia e São Luís do Norte
+📲 Link na bio
+
+#mecanico #autopecas #parceria #goianesia`},
+
+{num:25,cat:"carro",catLabel:"🔧 Auto Peças",hook:"Por trás de todo carro bem conservado tem esse hábito",text:`Por trás de todo carro bem conservado tem esse hábito.
+
+Clientes que sempre têm carro em bom estado fazem uma coisa simples: guardam tudo.
+
+→ Nota de cada troca de óleo
+→ Comprovante de cada peça trocada
+→ Registro de alinhamento, balanceamento, revisão
+→ Data e quilometragem de cada serviço
+
+Por que importa:
+1. Você sabe exatamente o que fazer na próxima revisão
+2. Na hora de vender, o histórico valoriza o carro em até 20%
+3. Em caso de garantia, você tem tudo documentado
+
+📍 Goianésia e São Luís do Norte
+📲 Link na bio
+
+#carro #manutencao #dicas #autopecas #goianesia`},
+
+{num:26,cat:"carro",catLabel:"🔧 Auto Peças",hook:"Tipo de motorista que toda oficina teme receber",text:`Tipo de motorista que toda oficina teme receber.
+
+Não é o exigente. É o que chegou tarde demais.
+
+Como chega:
+→ "Tá fazendo um barulhinho há uns 6 meses"
+→ "A luz acendeu mas apaguei e esqueci"
+→ "Trocou óleo faz uns 3 anos mas tá bem"
+
+O que o mecânico pensa:
+→ O que era R$ 150 agora é R$ 1.400
+→ O que era 1 peça agora é 4
+
+Prevenção não é gasto. É investimento.
+
+📍 Goianésia e São Luís do Norte
+📲 Chama antes que seja tarde — link na bio
+
+#revisao #carro #autopecas #goianesia`},
+
+{num:27,cat:"carro",catLabel:"🔧 Auto Peças",hook:"O que acontece com seu carro quando você ignora a manutenção por 1 ano",text:`O que acontece com seu carro quando você ignora a manutenção por 1 ano.
+
+Mês 1-2: Nada perceptível. O problema existe mas está escondido.
+Mês 3-4: Pequenas perdas de performance. Mais combustível. Menos potência.
+Mês 5-6: Barulhos aparecem. Você nota mas adia.
+Mês 7-8: O problema começa a afetar outras peças em volta.
+Mês 9-10: O defeito fica óbvio. Já causou dano secundário.
+Mês 11-12: Você resolve — mas agora paga 3x o que pagaria no mês 1.
+
+📍 Goianésia e São Luís do Norte
+📲 Link na bio — resolve antes do mês 3
+
+#manutencao #preventiva #autopecas #goianesia`},
+
+{num:28,cat:"carro",catLabel:"🔧 Auto Peças",hook:"Esse carro rodou 500 mil km. O segredo é absurdo",text:`Esse carro rodou 500 mil km. O segredo é absurdo.
+
+Não é o modelo. Não é a marca. É disciplina.
+
+O que donos de carros com alta quilometragem têm em comum:
+→ Troca de óleo rigorosamente no prazo — sem exceção
+→ Nunca deixam o tanque chegar no reserva
+→ Guardam todas as notas e comprovantes de serviço
+→ Escolhem peças pela procedência, não só pelo preço
+
+Com manutenção certa, qualquer carro popular pode rodar mais de 300.000 km.
+
+📍 Goianésia e São Luís do Norte
+📲 Link na bio
+
+#carro #manutencao #autopecas #goianesia`},
+
+{num:29,cat:"carro",catLabel:"🔧 Auto Peças",hook:"Motorista que faz isso não merece ter carro",text:`Motorista que faz isso não merece ter carro.
+
+Tá, é brincadeira. Mas é sério ao mesmo tempo.
+
+Hábitos que todo mecânico detesta ver:
+→ Dirigir com o freio de mão levantado — destrói as lonas
+→ Pousar a mão no câmbio enquanto dirige — desgasta o sincronizador
+→ Frear de última hora sempre — acaba com pastilha e disco
+→ Virar o volante no limite com o carro parado — destroça a direção
+
+Compartilha com aquele amigo que faz pelo menos 3 desses 😅
+
+📍 Goianésia e São Luís do Norte
+📲 Link na bio
+
+#habitos #carro #autopecas #goianesia`},
+
+{num:30,cat:"carro",catLabel:"🔧 Auto Peças",hook:"Seu carro pode parar no meio da estrada hoje — e você não sabe",text:`Seu carro pode parar no meio da estrada hoje — e você não sabe.
+
+As 5 causas mais comuns de carro parado no acostamento:
+
+1. Bateria descarregada — vida útil média de 3 anos
+2. Correia dentada rompida — destrói o motor junto
+3. Superaquecimento — mangueira furada ou tampa do radiador
+4. Bomba de combustível — falha com tanque sempre no reserva
+5. Alternador — a bateria que você troca toda hora pode ser culpa dele
+
+A maioria dessas falhas tem sinal de alerta antes de acontecer.
+
+📍 Goianésia e São Luís do Norte
+📲 Link na bio
+
+#carro #pane #autopecas #manutencao #goianesia`},
+
+{num:31,cat:"carro",catLabel:"🔧 Auto Peças",hook:"Você está pagando caro demais e nem sabe",text:`Você está pagando caro demais e nem sabe.
+
+A diferença média entre o que clientes pagavam antes e o nosso preço foi de 43%.
+
+Mesma peça. Mesmo fabricante. Garantia incluída.
+
+Por que a diferença existe:
+→ Concessionárias têm margem altíssima em peças
+→ Internet cobra frete e você não sabe o que vai chegar
+→ Aqui você vê, compara e leva na hora
+
+Antes de fechar qualquer orçamento — me manda mensagem.
+
+📍 Goianésia e São Luís do Norte
+📲 Link na bio
+
+#preco #autopecas #economia #goianesia`},
+
+{num:32,cat:"carro",catLabel:"🔧 Auto Peças",hook:"A maioria das pessoas joga dinheiro fora toda semana no carro",text:`A maioria das pessoas joga dinheiro fora toda semana no carro.
+
+Os maiores desperdícios que vemos aqui na loja:
+
+→ Combustível de baixa qualidade — corrói o sistema
+→ Calibrar pneu errado — aumenta consumo em até 10%
+→ Usar óleo errado para o motor
+→ Trocar peças que não precisam ser trocadas
+→ Não comparar preços — a diferença pode ser de 60%
+
+Conhecimento vale dinheiro.
+
+📍 Goianésia e São Luís do Norte
+📲 Fale com a gente — link na bio
+
+#economize #carro #autopecas #goianesia`},
+
+{num:33,cat:"carro",catLabel:"🔧 Auto Peças",hook:"Você tem até 10 mil km antes que seja tarde",text:`Você tem até 10 mil km antes que seja tarde.
+
+Esse é o prazo médio de vida de uma pastilha de freio em uso urbano.
+
+Como verificar sem tirar a roda:
+→ Olha pelo vão da roda — a pastilha fica prensada contra o disco
+→ Se estiver fina como uma moeda — já passou do prazo
+→ Se já está raspando metal: para o carro hoje
+
+Temos pastilhas para todos os modelos.
+
+📍 Goianésia e São Luís do Norte
+📲 Link na bio
+
+#freio #pastilha #autopecas #goianesia`},
+
+{num:34,cat:"carro",catLabel:"🔧 Auto Peças",hook:"O que encontramos dentro desse motor vai te chocar",text:`O que encontramos dentro desse motor vai te chocar.
+
+Cliente chegou reclamando que o carro estava "bebendo muito óleo".
+
+O que encontramos:
+→ Óleo com consistência de pasta — completamente degradado
+→ Borra preta acumulada nas galerias de lubrificação
+→ Anéis de segmento travados — pistões sem vedação
+
+Causa: nunca trocou o óleo. Em 4 anos e 60.000 km.
+Resultado: retífica completa — R$ 6.800.
+
+Se tivesse trocado regularmente: ~R$ 600 no mesmo período.
+
+📍 Goianésia e São Luís do Norte
+📲 Link na bio
+
+#motor #oleo #autopecas #manutencao #goianesia`},
+
+{num:35,cat:"carro",catLabel:"🔧 Auto Peças",hook:"Peça original vs. paralela: a verdade que ninguém conta",text:`Peça original vs. paralela: a verdade que ninguém conta.
+
+Não é original vs. paralela. É peça de procedência CONHECIDA vs. DESCONHECIDA.
+
+Peça original: mesmo fabricante da montadora. Preço mais alto.
+Paralela de qualidade: mesmo fabricante, sem a marca. Até 60% mais barata. Para peças de desgaste, funciona igual.
+
+O perigo real: peça de procedência desconhecida. Essas sim colocam sua vida em risco.
+
+Na BR Auto Peças só trabalhamos com procedência garantida.
+
+📍 Goianésia e São Luís do Norte
+📲 Link na bio
+
+#pecasoriginais #autopecas #carro #goianesia`},
+
+{num:36,cat:"carro",catLabel:"🔧 Auto Peças",hook:"3 perguntas que você deve fazer antes de comprar qualquer peça",text:`3 perguntas que você deve fazer antes de comprar qualquer peça.
+
+Se a loja não responder as 3, não compra.
+
+Pergunta 1: "Qual é o fabricante dessa peça?"
+Loja séria sabe de onde vem cada peça do estoque.
+
+Pergunta 2: "Tem nota fiscal?"
+Sem nota = sem garantia.
+
+Pergunta 3: "Qual é a garantia e como aciono?"
+Garantia verbal não vale nada.
+
+Na BR Auto Peças você não precisa perguntar — a gente já entrega tudo isso.
+
+📍 Goianésia e São Luís do Norte
+📲 Link na bio
+
+#autopecas #dicas #goianesia #garantia`},
+
+{num:37,cat:"carro",catLabel:"🔧 Auto Peças",hook:"Como fazer seu carro durar o dobro do tempo",text:`Como fazer seu carro durar o dobro do tempo.
+
+Não é segredo. É disciplina.
+
+O protocolo dos donos que nunca têm problema grave:
+→ Troca de óleo a cada 10.000 km — sem negociação
+→ Revisão de freios a cada 20.000 km
+→ Alinhamento e balanceamento a cada 10.000 km
+→ Filtros a cada 20.000 km
+→ Fluido de freio a cada 2 anos
+→ Correia dentada seguindo o manual
+
+Manda o modelo do carro. Monto o calendário pra você.
+
+📍 Goianésia e São Luís do Norte
+📲 Link na bio
+
+#manutencao #carro #autopecas #goianesia`},
+
+{num:38,cat:"carro",catLabel:"🔧 Auto Peças",hook:"O que o nível de óleo revela sobre a saúde do seu motor",text:`O que o nível de óleo revela sobre a saúde do seu motor.
+
+Verificar o óleo leva 2 minutos. E conta muito sobre o que está acontecendo dentro do motor.
+
+O que observar:
+→ Nível abaixo da mínima: consumo anormal — verificar vazamento
+→ Cor marrom escuro: óleo degradado — troca imediata
+→ Cor cinza ou leitosa: mistura com água — problema grave no cabeçote
+→ Consistência pastosa: queima excessiva — motor pedindo socorro
+→ Cheiro forte de combustível: injeção com problema
+
+Checa o óleo uma vez por mês. É grátis e pode evitar um conserto de R$ 5.000.
+
+📍 Goianésia e São Luís do Norte
+📲 Link na bio
+
+#oleo #motor #manutencao #autopecas #goianesia`},
+
+{num:39,cat:"carro",catLabel:"🔧 Auto Peças",hook:"Esse erro no abastecimento está destruindo seu motor lentamente",text:`Esse erro no abastecimento está destruindo seu motor lentamente.
+
+Colocar gasolina comum num motor que pede aditivada.
+
+O que acontece:
+→ Motor de alta compressão precisa de combustível com maior octanagem
+→ Gasolina comum causa detonação — explosão fora de tempo no cilindro
+→ Detonação repetida corrói pistões e bielas
+→ Resultado em médio prazo: motor comprometido
+
+Como saber qual combustível usar: manual do proprietário — última página, especificações técnicas.
+
+Economizar R$ 0,30 no litro pode custar R$ 8.000 no motor.
+
+📍 Goianésia e São Luís do Norte
+📲 Link na bio
+
+#gasolina #motor #autopecas #manutencao #goianesia`},
+
+{num:40,cat:"carro",catLabel:"🔧 Auto Peças",hook:"O que nos diferencia de qualquer loja da região",text:`O que nos diferencia de qualquer loja da região.
+
+Não é só o preço. Não é só o estoque.
+
+É o atendimento que resolve.
+
+→ Você descreve o problema — a gente identifica a peça certa
+→ Se tiver dúvida, consultamos o mecânico parceiro na hora
+→ Você sai com a peça certa na primeira vez
+→ Se não tiver no estoque, localizamos em até 24h
+→ Nota fiscal em tudo — sua garantia protegida
+
+Mais de 20 mil pessoas já confiam na gente.
+
+📍 Goianésia e São Luís do Norte
+📲 Vem resolver o seu — link na bio
+
+#brautopeças #autopecas #goianesia #confianca`},
+
+// ── DINHEIRO (15) ────────────────────────────────────────────
+{num:41,cat:"dinheiro",catLabel:"💸 Dinheiro",hook:"Você ganha bem mas não tem nada guardado. Aqui está o motivo",text:`Você ganha bem mas não tem nada guardado. Aqui está o motivo.
+
+Não é falta de dinheiro. É falta de ordem.
+
+O ciclo que prende a maioria:
+→ Recebe → paga contas → gasta o que sobrou → não sobrou nada
+
+O ciclo de quem acumula:
+→ Recebe → guarda primeiro → paga contas → gasta o que sobrou
+
+A diferença entre os dois: a ordem das ações.
+
+Pague-se primeiro. Antes de qualquer conta. Mesmo que seja R$ 50 por mês. O hábito vale mais que o valor.
+
+#financas #dinheiro #educacaofinanceira #economizar`},
+
+{num:42,cat:"dinheiro",catLabel:"💸 Dinheiro",hook:"O banco está enriquecendo com o seu dinheiro parado",text:`O banco está enriquecendo com o seu dinheiro parado.
+
+Dinheiro na conta corrente não rende nada.
+
+O que o banco faz enquanto ele fica parado:
+→ Empresta para outros clientes a 3%, 5%, 10% ao mês
+→ Investe em títulos públicos
+
+O que você recebe por isso: zero.
+
+Onde colocar para pelo menos bater a inflação:
+→ Tesouro Selic — rende ~10% ao ano, liquidez diária
+→ CDB de liquidez diária — mesma ideia
+→ Fundo DI — acessível com pouco dinheiro
+
+Deixar na conta corrente não é segurança. É presentear o banco.
+
+#investimentos #dinheiro #financas #educacaofinanceira`},
+
+{num:43,cat:"dinheiro",catLabel:"💸 Dinheiro",hook:"Você vai trabalhar até os 70 anos se não mudar isso agora",text:`Você vai trabalhar até os 70 anos se não mudar isso agora.
+
+Os números são cruéis:
+→ O INSS paga em média R$ 1.700 por mês
+→ A inflação corrói esse valor ano após ano
+→ A idade de aposentadoria só aumenta
+
+O que muda isso:
+→ Investir R$ 300 por mês por 30 anos = mais de R$ 1 milhão (com juros compostos a 8% ao ano)
+→ Começar aos 25 é muito diferente de começar aos 45
+→ Cada ano de atraso custa caro
+
+O melhor momento para começar era ontem. O segundo melhor é agora.
+
+#aposentadoria #investimentos #financas #futuro`},
+
+{num:44,cat:"dinheiro",catLabel:"💸 Dinheiro",hook:"Parcelou? Você acabou de pagar mais caro sem perceber",text:`Parcelou? Você acabou de pagar mais caro sem perceber.
+
+O parcelamento sem juros tem juros. Eles só estão escondidos.
+
+Como funciona:
+→ O lojista embute o custo do parcelamento no preço
+→ Quem paga à vista poderia negociar desconto
+
+O parcelamento com juros é ainda pior:
+→ Cartão cobra em média 400% ao ano de juros rotativos
+→ Parcelado em 10x pode custar 30% a mais
+
+Quando parcelar faz sentido:
+→ Quando o dinheiro investido rende mais que o custo do parcelamento
+
+Fora isso: junta e compra à vista. Sempre.
+
+#financas #credito #parcelamento #educacaofinanceira`},
+
+{num:45,cat:"dinheiro",catLabel:"💸 Dinheiro",hook:"A fórmula que os ricos usam que nunca te ensinaram na escola",text:`A fórmula que os ricos usam que nunca te ensinaram na escola.
+
+Ativo: algo que coloca dinheiro no seu bolso.
+Passivo: algo que tira dinheiro do seu bolso.
+
+A maioria das pessoas passa a vida acumulando passivos achando que são ativos.
+
+Passivo disfarçado de ativo:
+→ Carro novo — desvaloriza, consome, exige manutenção
+→ Casa própria financiada — juros, IPTU, manutenção
+→ Celular top — perde 40% do valor em 1 ano
+
+Ativo real:
+→ Imóvel alugado que paga mais do que custa
+→ Investimento que paga juros ou dividendos
+
+A pergunta certa não é "quanto custa?" É "isso coloca ou tira dinheiro de mim?"
+
+#financas #ativo #passivo #riqueza #educacaofinanceira`},
+
+{num:46,cat:"dinheiro",catLabel:"💸 Dinheiro",hook:"Juros compostos: o fenômeno que faz ricos ficarem mais ricos",text:`Juros compostos: o fenômeno que faz ricos ficarem mais ricos.
+
+Einstein chamou de "a oitava maravilha do mundo".
+
+R$ 1.000 investidos a 1% ao mês:
+→ Após 5 anos: R$ 1.817
+→ Após 10 anos: R$ 3.300
+→ Após 20 anos: R$ 10.893
+→ Após 30 anos: R$ 35.950
+
+O dinheiro trabalha enquanto você dorme. E quanto mais tempo passa, mais rápido cresce.
+
+O segredo não é quanto você investe. É por quanto tempo você mantém investido.
+
+Tempo + consistência = liberdade financeira.
+
+#jurocompostos #investimentos #financas #riqueza`},
+
+{num:47,cat:"dinheiro",catLabel:"💸 Dinheiro",hook:"Você não é pobre. Você tem hábitos de pobre",text:`Você não é pobre. Você tem hábitos de pobre.
+
+Mentalidade de escassez:
+→ "Não tenho dinheiro para investir"
+→ "Investimento é coisa de rico"
+→ "Comprei parcelado para não sentir"
+
+Mentalidade de abundância:
+→ "Vou investir o que tenho, mesmo sendo pouco"
+→ "Cada real guardado hoje compra liberdade amanhã"
+→ "Pagar à vista me dá poder de negociação"
+
+O bolso muda depois que a cabeça muda.
+
+Não é sobre quanto você ganha. É sobre o que você faz com o que tem.
+
+#mentalidade #financas #dinheiro #riqueza`},
+
+{num:48,cat:"dinheiro",catLabel:"💸 Dinheiro",hook:"Seu salário é o problema? Não. O que você faz com ele é",text:`Seu salário é o problema? Não. O que você faz com ele é.
+
+Existem pessoas que ganham R$ 5.000 e não têm nada.
+Existem pessoas que ganham R$ 2.000 e têm reserva e investimento.
+
+A diferença não é renda. É gestão.
+
+Quem ganha pouco e guarda:
+→ Sabe exatamente para onde vai cada real
+→ Cortou gastos invisíveis — streaming, assinatura esquecida, delivery todo dia
+→ Trata investimento como conta fixa, não como sobra
+
+Inflação de lifestyle é a armadilha silenciosa de quem cresce na carreira.
+
+#salario #financas #gestao #dinheiro`},
+
+{num:49,cat:"dinheiro",catLabel:"💸 Dinheiro",hook:"A conta que ninguém faz antes de comprar um carro novo",text:`A conta que ninguém faz antes de comprar um carro novo.
+
+O carro não custa o valor da parcela.
+
+A conta real de um carro de R$ 80.000 em 60 meses:
+→ Juros pagos no total: ~R$ 22.000
+→ Seguro: ~R$ 4.000/ano
+→ IPVA: ~R$ 1.600/ano
+→ Manutenção: ~R$ 3.000/ano
+→ Combustível: ~R$ 500/mês
+
+Custo real em 5 anos: mais de R$ 140.000.
+Por um carro que vai valer R$ 45.000 ao final.
+
+A conta completa precisa ser feita antes de assinar.
+
+#carro #financiamento #financas #educacaofinanceira`},
+
+{num:50,cat:"dinheiro",catLabel:"💸 Dinheiro",hook:"R$ 100 por mês pode mudar sua vida. Veja como",text:`R$ 100 por mês pode mudar sua vida. Veja como.
+
+Não é sobre o valor. É sobre o hábito e o tempo.
+
+R$ 100 por mês investidos a 0,8% ao mês:
+→ Em 5 anos: R$ 7.347
+→ Em 10 anos: R$ 18.294
+→ Em 20 anos: R$ 59.295
+→ Em 30 anos: R$ 149.036
+
+Automatiza o investimento. Tira antes de gastar. Esquece que esse dinheiro existe.
+
+Dez anos depois você vai agradecer para você mesmo.
+
+#investimentos #financas #dinheiro #habitos`},
+
+{num:51,cat:"dinheiro",catLabel:"💸 Dinheiro",hook:"Você sabe exatamente para onde vai o seu dinheiro?",text:`Você sabe exatamente para onde vai o seu dinheiro?
+
+Se a resposta é não — esse é seu problema número 1.
+
+A regra 50-30-20:
+→ 50% para necessidades: moradia, alimentação, transporte
+→ 30% para desejos: lazer, restaurante, roupas
+→ 20% para investir e quitar dívidas
+
+Não é perfeita. Mas é um ponto de partida.
+
+Orçamento não é prisão. É GPS.
+
+Com ele você chega onde quer. Sem ele você anda em círculos.
+
+#orcamento #financas #dinheiro #gestaofinanceira`},
+
+{num:52,cat:"dinheiro",catLabel:"💸 Dinheiro",hook:"Dívida de cartão de crédito é a mais cara do Brasil",text:`Dívida de cartão de crédito é a mais cara do Brasil.
+
+Os números são absurdos:
+→ Juro rotativo: em média 400% ao ano
+→ Uma dívida de R$ 2.000 vira R$ 10.000 em 12 meses pagando só o mínimo
+→ O mínimo foi criado para você nunca sair da dívida
+
+Como sair:
+1. Para de usar o cartão agora
+2. Lista todas as dívidas com os juros
+3. Negocia direto com o banco
+4. Paga a de maior juros primeiro
+
+Existe saída. Mas não existe saída fácil.
+
+#cartao #divida #financas #educacaofinanceira`},
+
+{num:53,cat:"dinheiro",catLabel:"💸 Dinheiro",hook:"Reserva de emergência não é investimento — é seguro",text:`Reserva de emergência não é investimento — é seguro.
+
+O que acontece sem reserva:
+→ Carro quebra → vai pro cartão
+→ Perde o emprego → desespero imediato
+→ Qualquer imprevisto → destrói o planejamento
+
+Quanto ter: 6 meses das suas despesas mensais.
+
+Onde guardar:
+→ Tesouro Selic — rende e tem liquidez diária
+→ CDB de liquidez diária
+→ NÃO na poupança — rende menos que a inflação
+
+Reserva não é para render. É para estar disponível quando tudo der errado.
+
+E vai dar errado alguma hora.
+
+#reservaemergencia #financas #seguranca #educacaofinanceira`},
+
+{num:54,cat:"dinheiro",catLabel:"💸 Dinheiro",hook:"A poupança está roubando o seu dinheiro todo mês",text:`A poupança está roubando o seu dinheiro todo mês.
+
+Não literalmente. Mas o efeito é o mesmo.
+
+Poupança rendeu ~6% ao ano.
+Inflação (IPCA): ~4,8% ao ano.
+Ganho real: menos de 1,2% ao ano.
+
+Alternativas com mais rendimento e mesma segurança:
+→ Tesouro Selic: rende ~10% ao ano, garantido pelo governo
+→ CDB com liquidez diária: rende acima da poupança
+→ LCI/LCA: isento de IR
+
+Segurança não precisa ser sinônimo de rendimento zero.
+
+#poupanca #investimentos #financas #educacaofinanceira`},
+
+{num:55,cat:"dinheiro",catLabel:"💸 Dinheiro",hook:"O que fazem com o dinheiro as pessoas que nunca ficam sem ele",text:`O que fazem com o dinheiro as pessoas que nunca ficam sem ele.
+
+Não é sorte. Não é salário alto. É sistema.
+
+Os hábitos que observei em pessoas financeiramente estáveis:
+
+→ Têm reserva — nunca dependem de crédito para emergência
+→ Não compram por impulso — esperam 48h antes de decisão grande
+→ Sabem a diferença entre preço e custo
+→ Investem antes de gastar
+→ Não tentam parecer ricos — tentam ficar ricos
+
+Riqueza não é o que você exibe. É o que você acumula em silêncio.
+
+#financas #dinheiro #habitos #riqueza`},
+
+// ── IMPOSTOS (10) ─────────────────────────────────────────────
+{num:56,cat:"imposto",catLabel:"🧾 Impostos & Direitos",hook:"Você paga imposto até na conta de luz — e não sabe quanto",text:`Você paga imposto até na conta de luz — e não sabe quanto.
+
+O que você paga de imposto por dia sem perceber:
+→ Conta de luz: ICMS de 25% a 35%
+→ Gasolina: quase 45% do preço é imposto
+→ Cerveja: impostos chegam a 60%
+→ Smartphone: tributação pode passar de 80%
+→ Salário: INSS + IR pode tirar até 37%
+
+O brasileiro trabalha em média até maio só para pagar impostos.
+
+Isso tem nome: Dia da Liberdade Fiscal — em 2024 foi em 26 de maio.
+
+Saber isso muda como você toma decisões.
+
+#imposto #brasil #tributacao #financas`},
+
+{num:57,cat:"imposto",catLabel:"🧾 Impostos & Direitos",hook:"Imposto de renda: o que você pode deduzir e nunca deduziu",text:`Imposto de renda: o que você pode deduzir e nunca deduziu.
+
+A Receita Federal não te conta tudo.
+
+O que pode ser deduzido no IR:
+→ Dependentes: R$ 2.275,08 por pessoa
+→ Saúde: gastos com médico, dentista, plano — sem limite
+→ Educação: até R$ 3.561,50 por pessoa
+→ Previdência privada (PGBL): até 12% da renda bruta
+→ Pensão alimentícia judicial: 100% dedutível
+
+Muita gente deixa dinheiro na mesa todos os anos por não saber isso.
+
+Declara tudo. Guarda os comprovantes.
+
+#impostaderenda #IR #declaracao #financas`},
+
+{num:58,cat:"imposto",catLabel:"🧾 Impostos & Direitos",hook:"MEI: o que o governo não te contou quando você abriu",text:`MEI: o que o governo não te contou quando você abriu.
+
+O que o MEI dá direito — e muitos não usam:
+→ Aposentadoria por tempo de contribuição
+→ Auxílio-maternidade
+→ Auxílio-doença se ficar afastado
+→ Pensão por morte para dependentes
+
+O que pode te prejudicar:
+→ Não pagar o DAS mensalmente — perde todos os benefícios
+→ Ultrapassar R$ 81.000/ano sem migrar de categoria
+→ Ter sócio ou ser sócio de outra empresa
+
+MEI é porta de entrada. Não é destino final.
+
+#MEI #empreendedorismo #imposto #financas`},
+
+{num:59,cat:"imposto",catLabel:"🧾 Impostos & Direitos",hook:"Você sabia que pode recuperar imposto pago a mais?",text:`Você sabia que pode recuperar imposto pago a mais?
+
+A Receita Federal não te avisa. Mas você tem direito.
+
+Quando isso acontece:
+→ Quando sua declaração foi simplificada mas o modelo completo seria melhor
+→ Quando não lançou todas as deduções permitidas
+→ Quando teve retenção na fonte e não declarou
+
+Como verificar:
+→ Acesse o portal Meu Imposto de Renda em gov.br
+→ Compare o que foi pago com o que poderia ter sido deduzido
+
+Dá para pedir restituição de anos anteriores — prazo de 5 anos.
+
+Dinheiro que você já pagou pode estar esperando por você.
+
+#IR #restituicao #impostaderenda #financas`},
+
+{num:60,cat:"imposto",catLabel:"🧾 Impostos & Direitos",hook:"Simples Nacional: por que muitas empresas pagam mais do que deveriam",text:`Simples Nacional: por que muitas empresas pagam mais do que deveriam.
+
+Simples não é sempre o mais simples — nem o mais barato.
+
+Quando vale sair do Simples:
+→ Quando o faturamento está próximo do teto
+→ Quando a margem de lucro é alta e o Lucro Presumido tributaria menos
+→ Quando há muitas despesas que podem ser deduzidas no Lucro Real
+
+Essa é uma conversa com contador. Mas você precisa saber que ela existe.
+
+Muitos pagam R$ 30.000 a mais por ano simplesmente por nunca terem feito essa conta.
+
+#simplesNacional #empresa #contador #impostos`},
+
+{num:61,cat:"imposto",catLabel:"🧾 Impostos & Direitos",hook:"Tudo que você compra no Brasil tem imposto escondido",text:`Tudo que você compra no Brasil tem imposto escondido.
+
+E por lei, o lojista é obrigado a te informar. Mas ninguém pergunta.
+
+Os impostos que estão no preço de tudo:
+→ ICMS: até 35% em produtos e serviços
+→ PIS/COFINS: 3% a 9%
+→ IPI: em produtos industrializados
+→ ISS: em serviços
+
+Quando você paga R$ 100, de R$ 30 a R$ 45 vão para o governo.
+
+Não é conspiração. É o Código Tributário Nacional.
+
+Saber isso te faz consumidor mais consciente — e empresário mais estratégico.
+
+#impostos #brasil #tributacao #consumidor`},
+
+{num:62,cat:"imposto",catLabel:"🧾 Impostos & Direitos",hook:"A nota fiscal que você não pediu custou caro para você",text:`A nota fiscal que você não pediu custou caro para você.
+
+Quando você não pede nota fiscal:
+→ Perde o direito de garantia legal do produto
+→ Não pode usar como dedução no IR
+→ Não tem comprovante em caso de processo judicial
+→ Não pode reclamar no Procon com respaldo
+
+E o comerciante que não emite:
+→ Paga menos imposto
+→ Concorre de forma desleal com quem paga
+
+Nota fiscal não é burocracia. É o documento que protege seus direitos.
+
+Sempre peça. Para tudo.
+
+#notafiscal #direitos #consumidor #impostos`},
+
+{num:63,cat:"imposto",catLabel:"🧾 Impostos & Direitos",hook:"O que muda na sua vida com a reforma tributária",text:`O que muda na sua vida com a reforma tributária.
+
+A reforma aprovada vai mudar como o Brasil cobra impostos.
+
+O que vai acontecer:
+→ PIS, COFINS, IPI, ICMS e ISS serão substituídos por CBS e IBS
+→ Um único imposto sobre consumo — o IVA dual
+→ Transição de 7 anos (2026 a 2033)
+→ Cashback para população de baixa renda
+
+Para o consumidor: mais transparência — você vai ver o imposto destacado no preço.
+Para empresas: menos burocracia fiscal.
+
+Mas a conta ainda chega. O sistema muda. O imposto continua.
+
+#reformatributaria #impostos #brasil #financas`},
+
+{num:64,cat:"imposto",catLabel:"🧾 Impostos & Direitos",hook:"Você trabalha quantos meses por ano só para pagar imposto?",text:`Você trabalha quantos meses por ano só para pagar imposto?
+
+Janeiro: pagando impostos.
+Fevereiro: pagando impostos.
+Março: pagando impostos.
+Abril: pagando impostos.
+Maio: pagando impostos.
+26 de maio: Dia da Liberdade Fiscal — a partir daqui, você trabalha para você.
+
+Quase 5 meses de trabalho por ano inteiramente para o governo.
+
+Não é sobre ser contra imposto. É sobre saber o que você paga e exigir retorno equivalente.
+
+#impostometro #brasil #imposto #tributacao`},
+
+{num:65,cat:"imposto",catLabel:"🧾 Impostos & Direitos",hook:"Pró-labore vs. distribuição de lucros: a diferença que economiza fortunas",text:`Pró-labore vs. distribuição de lucros: a diferença que economiza fortunas.
+
+Se você tem empresa e não sabe isso, está pagando imposto a mais.
+
+Pró-labore:
+→ É o salário que o sócio paga a si mesmo
+→ Tem incidência de INSS (11%) e pode ter IR
+
+Distribuição de lucros:
+→ Para empresas no Simples e Lucro Presumido: ISENTO de IR
+→ Não tem INSS
+→ Legal, regulamentada e altamente recomendada
+
+A estratégia: minimizar pró-labore e maximizar distribuição de lucros.
+
+Essa conta pode economizar dezenas de milhares por ano.
+
+#prolabore #lucros #empresa #contador #impostos`},
+
+// ── MENTALIDADE (15) ─────────────────────────────────────────
+{num:66,cat:"mentalidade",catLabel:"🧠 Mentalidade",hook:"A pessoa que você será em 5 anos depende do que você faz hoje",text:`A pessoa que você será em 5 anos depende do que você faz hoje.
+
+Não do que você planeja. Do que você faz.
+
+O que muda uma vida em 5 anos:
+→ Ler 20 páginas por dia = 36 livros por ano = 180 livros em 5 anos
+→ Exercitar 30 minutos por dia = saúde transformada
+→ Guardar R$ 300 por mês = mais de R$ 20.000 com juros
+→ Estudar 1 hora por dia = nova profissão ou especialização
+
+Nenhum desses parece impossível.
+
+A diferença entre quem chega e quem não chega: o dia em que quiseram parar — e não pararam.
+
+#mentalidade #disciplina #habitos #crescimento`},
+
+{num:67,cat:"mentalidade",catLabel:"🧠 Mentalidade",hook:"Ninguém ficou rico esperando a hora certa",text:`Ninguém ficou rico esperando a hora certa.
+
+"Vou investir quando ganhar mais."
+"Vou começar o negócio quando tiver mais dinheiro."
+"Vou estudar quando tiver mais tempo."
+
+A hora certa nunca chega. Porque a hora certa é feita, não encontrada.
+
+O que as pessoas bem-sucedidas têm em comum:
+→ Começaram antes de estar prontos
+→ Aprenderam enquanto faziam
+→ Erraram cedo e ajustaram rápido
+
+Condição perfeita é para quem quer ter razão para não agir.
+
+Comece agora com o que você tem.
+
+#mentalidade #acao #crescimento #motivacao`},
+
+{num:68,cat:"mentalidade",catLabel:"🧠 Mentalidade",hook:"Você não tem problema de motivação. Você tem problema de sistema",text:`Você não tem problema de motivação. Você tem problema de sistema.
+
+Motivação é uma emoção. Emoções vão e voltam.
+
+Quem depende de motivação:
+→ Treina quando está animado
+→ Estuda quando tem vontade
+
+Quem tem sistema:
+→ Treina porque é terça-feira — independente do humor
+→ Investe o valor fixo todo dia 5 — automaticamente
+→ Estuda das 20h às 21h — sempre
+
+A motivação te coloca em movimento.
+O sistema te mantém em movimento.
+
+Não espera a vontade. Cria o sistema.
+
+#sistema #habitos #disciplina #mentalidade`},
+
+{num:69,cat:"mentalidade",catLabel:"🧠 Mentalidade",hook:"O preço que você paga por não se valorizar",text:`O preço que você paga por não se valorizar.
+
+Quando você não se valoriza:
+→ Aceita o primeiro salário sem negociar
+→ Cobra menos que o mercado com medo de perder o cliente
+→ Faz hora extra sem remuneração
+→ Mantém clientes que pagam mal e atrasam
+
+O resultado:
+→ Trabalha mais
+→ Ganha menos
+→ Ressente quem ganha mais fazendo menos
+
+Valorização começa por dentro. Preço é consequência de autoconhecimento.
+
+#autoestima #valor #carreira #mentalidade`},
+
+{num:70,cat:"mentalidade",catLabel:"🧠 Mentalidade",hook:"Por que pessoas inteligentes ficam presas em empregos que odeiam",text:`Por que pessoas inteligentes ficam presas em empregos que odeiam.
+
+Não é falta de opção. É o custo afundado.
+
+"Já trabalhei aqui 8 anos, não posso sair."
+"Já gastei R$ 40.000 nessa faculdade, preciso terminar."
+
+Você está tomando decisões com base no passado — não no futuro.
+
+A pergunta certa não é "quanto já investi?" É "qual o melhor caminho a partir de agora?"
+
+Se a resposta é sair, sair. O tempo futuro vale mais do que o dinheiro passado.
+
+#carreira #mentalidade #decisao #crescimento`},
+
+{num:71,cat:"mentalidade",catLabel:"🧠 Mentalidade",hook:"O hábito que separa quem cresce de quem fica estagnado",text:`O hábito que separa quem cresce de quem fica estagnado.
+
+É simples e incomoda: responsabilidade radical.
+
+Quem cresce:
+→ Quando erra, pergunta "o que eu poderia ter feito diferente?"
+→ Trata feedback como dado, não como ataque
+
+Quem fica estagnado:
+→ O chefe é ruim
+→ O mercado está difícil
+→ O governo atrapalha
+→ A sorte não ajuda
+
+Ambiente importa. Circunstância importa.
+Mas a sua resposta às circunstâncias é 100% sua.
+
+Responsabilidade não é culpa. É poder.
+
+#responsabilidade #mentalidade #crescimento #lideranca`},
+
+{num:72,cat:"mentalidade",catLabel:"🧠 Mentalidade",hook:"Você está ocupado ou está sendo produtivo?",text:`Você está ocupado ou está sendo produtivo?
+
+São coisas completamente diferentes.
+
+Ocupado:
+→ Responde e-mail o dia todo
+→ Participa de reuniões desnecessárias
+→ Sente que trabalhou muito mas não avançou nada
+
+Produtivo:
+→ Identifica as 3 tarefas que realmente movem o resultado
+→ Protege blocos de tempo para trabalho profundo
+→ Faz menos — mas com mais impacto
+
+A pergunta não é "trabalhei muito?". É "o que avancei hoje?"
+
+#produtividade #foco #mentalidade #tempo`},
+
+{num:73,cat:"mentalidade",catLabel:"🧠 Mentalidade",hook:"O que pessoas bem-sucedidas fazem nas primeiras horas do dia",text:`O que pessoas bem-sucedidas fazem nas primeiras horas do dia.
+
+O que evitam:
+→ Celular nos primeiros 30 minutos
+→ Redes sociais antes de trabalhar no que importa
+→ Notícias negativas logo cedo
+
+O que fazem:
+→ Movem o corpo — mesmo que 15 minutos
+→ Definem as 3 prioridades do dia
+→ Trabalham no projeto mais importante ANTES de responder qualquer mensagem
+
+A manhã define o tom do dia.
+Quem controla a manhã, controla o dia.
+
+#rotina #manha #mentalidade #produtividade`},
+
+{num:74,cat:"mentalidade",catLabel:"🧠 Mentalidade",hook:"Conforto é o inimigo mais bonito que existe",text:`Conforto é o inimigo mais bonito que existe.
+
+Ele não parece inimigo. Parece recompensa.
+
+O conforto diz:
+→ "Você já fez o suficiente hoje"
+→ "Amanhã você começa"
+→ "Não vale o risco"
+
+Crescimento vive no desconforto:
+→ A conversa difícil que você evita
+→ O risco que você não corre
+→ A habilidade nova que você não aprende
+
+Você não precisa eliminar o conforto. Precisa deixar de obedecê-lo.
+
+#conforto #crescimento #mentalidade #disciplina`},
+
+{num:75,cat:"mentalidade",catLabel:"🧠 Mentalidade",hook:"A verdade sobre pessoas que 'tiveram sorte'",text:`A verdade sobre pessoas que "tiveram sorte".
+
+O que parece sorte por fora:
+→ "Ele foi indicado para o cargo perfeito"
+→ "Ela apareceu na mídia do nada"
+
+O que aconteceu por dentro:
+→ Ele construiu reputação por anos antes de ser indicado
+→ Ela criava conteúdo há 2 anos quando a mídia a encontrou
+
+Seneca dizia: "Sorte é quando a preparação encontra a oportunidade."
+
+A oportunidade passa por muitas pessoas. Para quem está preparado, ela para.
+
+#sorte #preparacao #mentalidade #sucesso`},
+
+{num:76,cat:"mentalidade",catLabel:"🧠 Mentalidade",hook:"Por que você para antes de chegar ao resultado",text:`Por que você para antes de chegar ao resultado.
+
+Quase todo mundo desiste na parte mais difícil — que é exatamente antes de funcionar.
+
+O processo:
+→ Começo: empolgação e energia
+→ Meio: dificuldade, dúvida, tentação de parar
+→ Final: resultado — mas poucos chegam aqui
+
+O que separa quem chega:
+→ Saber que a fase do meio é obrigatória
+→ Ter compromisso com o processo, não com a motivação
+→ Reduzir a meta se necessário — mas nunca zerar
+
+A maioria não falha por falta de talento. Falha por desistir no segundo terço.
+
+Continue.
+
+#persistencia #mentalidade #crescimento #resultado`},
+
+{num:77,cat:"mentalidade",catLabel:"🧠 Mentalidade",hook:"O que você tolera é o que você aprova",text:`O que você tolera é o que você aprova.
+
+O que você tolera define o seu padrão:
+→ Tolera atraso? Atraso se torna normal
+→ Tolera resultado mediano? Mediano vira meta
+→ Tolera sua própria procrastinação? Ela avança
+
+Elevar padrões significa parar de tolerar:
+→ Pessoas que drenam sua energia
+→ Hábitos que te diminuem
+→ Desculpas que você mesmo cria
+
+O que você aceita é o que define onde você está.
+O que você recusa é o que define onde você vai.
+
+#padroes #mentalidade #crescimento #lideranca`},
+
+{num:78,cat:"mentalidade",catLabel:"🧠 Mentalidade",hook:"Você não precisa de mais informação. Precisa de mais ação",text:`Você não precisa de mais informação. Precisa de mais ação.
+
+Sintomas da paralisia por análise:
+→ Já assistiu 40 horas de curso e não aplicou nada
+→ Tem plano detalhado mas não começou
+→ Espera ter certeza antes de agir
+
+A verdade: certeza vem depois da ação, não antes.
+
+Você aprende:
+→ Fazendo, não estudando fazer
+→ Errando, não evitando errar
+
+80% executado é infinitamente melhor que 100% planejado e não feito.
+
+Começa. Ajusta no caminho.
+
+#acao #mentalidade #producao #execucao`},
+
+{num:79,cat:"mentalidade",catLabel:"🧠 Mentalidade",hook:"A diferença entre quem reclama e quem resolve",text:`A diferença entre quem reclama e quem resolve.
+
+Não é inteligência. Não é recurso. É foco.
+
+Quem reclama foca no problema:
+→ "O mercado está difícil"
+→ "As pessoas não valorizam"
+
+Quem resolve foca na solução:
+→ "O mercado está difícil — o que posso fazer diferente?"
+→ "Como posso comunicar melhor o meu valor?"
+
+Reclamar tem função: libera tensão.
+Mas não resolve nada.
+
+O próximo passo depois de reclamar precisa ser: o que eu vou fazer?
+
+#mentalidade #resolucao #lideranca #crescimento`},
+
+{num:80,cat:"mentalidade",catLabel:"🧠 Mentalidade",hook:"Você está investindo em você mesmo ou só no conforto de hoje?",text:`Você está investindo em você mesmo ou só no conforto de hoje?
+
+Investir em si mesmo:
+→ Pagar por um curso que expande sua habilidade
+→ Ir ao médico antes de ficar doente
+→ Dormir bem — descanso cria performance
+→ Ler sobre sua área — conhecimento gera diferenciação
+
+Conforto de hoje:
+→ Assinatura de streaming que você não assiste
+→ Delivery todos os dias
+→ Mais um fim de semana sem aprender nada
+
+O salário de amanhã é construído com os investimentos de hoje.
+
+#desenvolvimentopessoal #mentalidade #investimento #crescimento`},
+
+// ── ECONOMIA (10) ─────────────────────────────────────────────
+{num:81,cat:"economia",catLabel:"📊 Economia BR",hook:"Por que o Brasil tem juro tão alto e o que isso faz com o seu bolso",text:`Por que o Brasil tem juro tão alto e o que isso faz com o seu bolso.
+
+A taxa Selic está entre as mais altas do mundo — e isso afeta todo mundo.
+
+Por que o juro é alto:
+→ Inflação alta exige juro alto para ser controlada
+→ Risco fiscal: quando o governo gasta mais do que arrecada
+→ Histórico de incertezas cria desconfiança
+
+O que o juro alto faz com você:
+→ Se você tem dívida: crédito fica mais caro
+→ Se você investe: renda fixa paga mais — Tesouro, CDB, LCI rendem acima de 10% ao ano
+→ Se você é empresário: capital de giro fica caro
+
+Entender a Selic é entender o ritmo da economia.
+
+#selic #juros #economia #brasil #financas`},
+
+{num:82,cat:"economia",catLabel:"📊 Economia BR",hook:"Inflação: o imposto invisível que todo mundo paga e ninguém vota",text:`Inflação: o imposto invisível que todo mundo paga e ninguém vota.
+
+Inflação é a perda do poder de compra do seu dinheiro.
+
+Quem mais sofre:
+→ Quem tem dinheiro parado — a inflação corrói silenciosamente
+→ Quem recebe salário fixo sem reajuste
+
+Quem se protege:
+→ Quem investe em ativos atrelados ao IPCA — Tesouro IPCA+
+→ Quem tem imóvel ou negócio que reajusta preço
+
+A inflação é democrática: atinge todo mundo.
+Mas o impacto é maior em quem menos tem.
+
+#inflacao #IPCA #economia #brasil`},
+
+{num:83,cat:"economia",catLabel:"📊 Economia BR",hook:"O que é o déficit público e por que você deveria se importar",text:`O que é o déficit público e por que você deveria se importar.
+
+Déficit público = governo no cheque especial.
+
+O que acontece quando o governo está no vermelho:
+→ Precisa emitir títulos para se financiar — aumenta a dívida
+→ Pode elevar impostos para compensar
+→ Juro sobe para atrair credores
+
+Por que você deveria se importar:
+→ Inflação alta corrói seu salário e suas economias
+→ Juro alto encarece crédito para você e para as empresas
+→ Menos investimento em saúde, educação e infraestrutura
+
+Economia pública e finanças pessoais estão mais conectadas do que parecem.
+
+#deficit #governo #economia #brasil`},
+
+{num:84,cat:"economia",catLabel:"📊 Economia BR",hook:"PIB cresceu. Por que você não sentiu?",text:`PIB cresceu. Por que você não sentiu?
+
+O Brasil cresceu. Os números dizem isso. Mas a maioria não percebeu.
+
+Por que o crescimento do PIB não chega no bolso de todos:
+→ O crescimento pode ser concentrado em poucos setores
+→ Lucro das empresas sobe, salários sobem menos
+→ Inflação corrói o ganho real
+
+O PIB mede quanto a economia produz. Não mede como essa produção é distribuída.
+
+Um país pode crescer e a maioria da população empobrecer ao mesmo tempo.
+
+Entender isso muda como você analisa notícias econômicas.
+
+#PIB #economia #brasil #financas`},
+
+{num:85,cat:"economia",catLabel:"📊 Economia BR",hook:"O que o dólar alto faz com o seu dia a dia",text:`O que o dólar alto faz com o seu dia a dia.
+
+O dólar não é só problema de quem viaja.
+
+Como o dólar alto chega até você:
+→ Combustível: petróleo é cotado em dólar — gasolina sobe
+→ Eletrônicos: componentes importados ficam mais caros
+→ Alimentos: soja, milho, frango são exportados — preço interno sobe junto
+→ Remédios: insumos importados encarecem medicamentos
+
+Por que o real enfraquece:
+→ Déficit fiscal elevado
+→ Incerteza política
+→ Saída de capital estrangeiro
+
+A taxa de câmbio não é abstrata. É o que você paga no mercado amanhã.
+
+#dolar #cambio #economia #brasil`},
+
+{num:86,cat:"economia",catLabel:"📊 Economia BR",hook:"Por que o brasileiro trabalha tanto e acumula tão pouco",text:`Por que o brasileiro trabalha tanto e acumula tão pouco.
+
+Não é preguiça. É sistema.
+
+Os fatores estruturais:
+→ Carga tributária de ~33% do PIB — uma das mais altas do mundo em desenvolvimento
+→ Inflação histórica que corrói poupança
+→ Educação financeira quase inexistente nas escolas
+→ Crédito facilmente acessível com juros predatórios
+
+O resultado:
+→ 7 em cada 10 brasileiros não têm reserva de emergência
+→ Mais de 70 milhões negativados
+
+Não é sua culpa. Mas é seu problema. E tem saída individual mesmo sem mudança sistêmica.
+
+#brasil #financas #poupanca #educacaofinanceira`},
+
+{num:87,cat:"economia",catLabel:"📊 Economia BR",hook:"O que é o Copom e por que a reunião dele muda o preço de tudo",text:`O que é o Copom e por que a reunião dele muda o preço de tudo.
+
+O Copom é o Comitê de Política Monetária do Banco Central.
+
+Ele se reúne a cada 45 dias para definir a taxa Selic.
+
+Essa decisão afeta:
+→ Quanto o banco cobra no crédito para você
+→ Quanto você recebe de rendimento no Tesouro e CDB
+→ O custo do financiamento imobiliário
+→ O comportamento da inflação
+
+Quando a Selic sobe: crédito fica mais caro, renda fixa rende mais.
+Quando a Selic cai: crédito fica mais barato, bolsa tende a subir.
+
+Uma decisão de 9 pessoas a cada 45 dias impacta o bolso de 200 milhões.
+
+#copom #selic #economia #brasil`},
+
+{num:88,cat:"economia",catLabel:"📊 Economia BR",hook:"Por que a classe média paga mais imposto proporcionalmente que os ricos",text:`Por que a classe média paga mais imposto proporcionalmente que os ricos.
+
+Isso tem nome: regressividade tributária.
+
+Como funciona:
+→ Impostos sobre consumo são iguais para todos
+→ Mas representam fatia MUITO maior da renda de quem ganha menos
+
+Quem ganha R$ 2.000 e paga R$ 400 em impostos: 20% da renda.
+Quem ganha R$ 20.000 e paga os mesmos R$ 400: 2% da renda.
+
+Além disso:
+→ Grandes fortunas são tributadas via dividendos — historicamente isentos de IR
+→ Herança é pouco tributada no Brasil
+
+Não é conspiração. É como o sistema foi desenhado.
+
+#imposto #tributacao #desigualdade #brasil`},
+
+{num:89,cat:"economia",catLabel:"📊 Economia BR",hook:"O que é IPCA e IGP-M e por que confundir os dois te prejudica",text:`O que é IPCA e IGP-M e por que confundir os dois te prejudica.
+
+IPCA:
+→ Mede a inflação das famílias
+→ É o índice oficial do governo
+→ Usado para reajustar salários, Tesouro IPCA+, planos de saúde
+
+IGP-M:
+→ Inclui preços no atacado, na construção e no varejo
+→ Usado historicamente para reajustar aluguéis
+→ Pode variar muito mais que o IPCA
+
+Por que importa:
+→ Se seu aluguel é reajustado pelo IGP-M, pode subir muito mais que a inflação que você sente
+→ Negociar o índice do contrato faz diferença real no bolso
+
+#IPCA #IGPM #inflacao #aluguel #financas`},
+
+{num:90,cat:"economia",catLabel:"📊 Economia BR",hook:"O que o endividamento das famílias brasileiras diz sobre o futuro do país",text:`O que o endividamento das famílias brasileiras diz sobre o futuro do país.
+
+Os números de 2024:
+→ Mais de 70 milhões de brasileiros negativados
+→ Endividamento das famílias acima de 90% da renda anual
+→ Comprometimento da renda com dívidas: em média 28%
+
+O que isso significa:
+→ Consumo reprimido — quem está endividado não consome
+→ Vulnerabilidade: qualquer crise pessoal vira colapso
+→ Dificuldade de crescimento sustentável
+
+Isso é sistêmico. Mas tem saída individual.
+
+Sair da dívida é o investimento com maior retorno garantido do Brasil.
+
+#endividamento #brasil #financas #divida`},
+
+// ── COMPORTAMENTO (10) ────────────────────────────────────────
+{num:91,cat:"comportamento",catLabel:"😤 Comportamento",hook:"Você faz escolhas ou repete hábitos?",text:`Você faz escolhas ou repete hábitos?
+
+Pesquisas de neurociência mostram: 95% das nossas ações diárias são automáticas.
+
+Você não escolhe a maioria das coisas que faz. Você repete padrões gravados.
+
+O café da manhã que você come.
+Como você reage quando alguém te critica.
+O que você compra quando está estressado.
+
+Esses não são escolhas conscientes. São hábitos em execução.
+
+A boa notícia: hábitos podem ser reprogramados.
+
+Primeiro passo: perceber que você está no automático.
+Segundo passo: esse hábito me serve?
+
+#habitos #neurociencia #comportamento #autoconhecimento`},
+
+{num:92,cat:"comportamento",catLabel:"😤 Comportamento",hook:"Por que você compra o que não precisa e não compra o que precisa",text:`Por que você compra o que não precisa e não compra o que precisa.
+
+Não é fraqueza. É psicologia — e as marcas sabem disso.
+
+O que te faz comprar o que não precisa:
+→ Desconto — sensação de ganho, não de gasto
+→ Escassez falsa — "últimas unidades", "só hoje"
+→ Estado emocional — compra por prazer, tristeza ou ansiedade
+→ Ancoragem — preço "antes" caro faz o "agora" parecer barato
+
+O que te faz não comprar o que precisa:
+→ Dor imediata do pagamento vs. benefício futuro distante
+→ "Vou comprar depois" — e esquece
+
+As empresas gastam bilhões para ativar seus gatilhos. Você pode aprender a reconhecê-los.
+
+#consumo #psicologia #comportamento #financas`},
+
+{num:93,cat:"comportamento",catLabel:"😤 Comportamento",hook:"Você compara sua vida com quem está à frente — e esquece quem está atrás",text:`Você compara sua vida com quem está à frente — e esquece quem está atrás.
+
+Quando você olha só para quem tem mais:
+→ Sente que não evoluiu
+→ Minimiza o que conquistou
+→ Gasta para parecer no mesmo nível que não está
+
+Quando você olha para quem você era:
+→ Vê o quanto cresceu
+→ Identifica o que funcionou
+→ Age com gratidão e estratégia — não com ansiedade
+
+Referências externas são úteis para aprender.
+Sua referência de progresso deve ser você mesmo de ontem.
+
+#comparacao #mentalidade #crescimento #autoconhecimento`},
+
+{num:94,cat:"comportamento",catLabel:"😤 Comportamento",hook:"O que acontece com você quando está sob pressão revela quem você realmente é",text:`O que acontece com você quando está sob pressão revela quem você realmente é.
+
+Qualquer um é educado quando está bem.
+
+Sob pressão, o caráter aparece:
+→ Como você trata quem não pode te prejudicar
+→ Se você cumpre o que prometeu quando fica difícil
+→ Se você age com honestidade quando a mentira seria mais fácil
+
+Não é julgamento. É diagnóstico.
+
+Se você não gosta do que aparece, é o momento de trabalhar nisso.
+
+Pressão não cria caráter. Ela revela o que já estava lá.
+
+#carater #pressao #comportamento #lideranca`},
+
+{num:95,cat:"comportamento",catLabel:"😤 Comportamento",hook:"Por que você não consegue dizer não — e o que isso custa",text:`Por que você não consegue dizer não — e o que isso custa.
+
+De onde vem:
+→ Medo de decepcionar
+→ Necessidade de aprovação
+→ Crença de que dizer não é ser egoísta
+
+O que custa não saber dizer não:
+→ Tempo: você faz o que outros definem como prioridade
+→ Foco: diz sim para tudo, executa nada bem
+→ Respeito: quem não tem limite é explorado
+
+Dizer não é uma forma de dizer sim — ao que realmente importa.
+
+Não é agressividade. É definição de valor.
+
+#limite #nao #comportamento #autoconhecimento`},
+
+{num:96,cat:"comportamento",catLabel:"😤 Comportamento",hook:"As pessoas ao redor definem seu teto",text:`As pessoas ao redor definem seu teto.
+
+Jim Rohn dizia: você é a média das 5 pessoas com quem passa mais tempo.
+
+As pesquisas confirmam:
+→ Hábitos financeiros são contagiantes
+→ Nível de ambição é influenciado pelo grupo
+→ Tom das conversas molda como você pensa
+
+Se seu grupo fala só de problema, você pensa em problema.
+Se ninguém ao redor investe, investir parece estranho.
+
+Você não precisa trocar todo mundo. Mas precisa adicionar pessoas que te puxam para cima.
+
+#circulosocial #influencia #comportamento #crescimento`},
+
+{num:97,cat:"comportamento",catLabel:"😤 Comportamento",hook:"Você evita conflito ou resolve conflito?",text:`Você evita conflito ou resolve conflito?
+
+Evitar conflito parece educação. Mas tem consequência.
+
+O que acontece quando você só evita:
+→ O problema não some — ele fervilha
+→ Ressentimento acumula
+→ Na hora que explode, é muito pior
+
+O que é resolver conflito de verdade:
+→ Nomear o problema com clareza e sem ataque
+→ Ouvir o outro lado com intenção de entender
+→ Buscar solução — não vitória
+
+Conflito bem gerido fortalece relação.
+Conflito evitado a deteriora silenciosamente.
+
+#conflito #comunicacao #comportamento #relacionamentos`},
+
+{num:98,cat:"comportamento",catLabel:"😤 Comportamento",hook:"Você reage ou responde?",text:`Você reage ou responde?
+
+Reagir:
+→ Automático
+→ Guiado pela emoção do momento
+→ Geralmente arrependido depois
+
+Responder:
+→ Intencional
+→ Guiado por valores e objetivo
+→ Leva um segundo a mais — e evita horas de dano
+
+O espaço entre estímulo e resposta é onde está sua liberdade.
+
+Você pode escolher o que faz com esse espaço.
+
+#reacao #resposta #comportamento #inteligenciaemocional`},
+
+{num:99,cat:"comportamento",catLabel:"😤 Comportamento",hook:"Reclamação constante é o sinal mais claro de estagnação",text:`Reclamação constante é o sinal mais claro de estagnação.
+
+Quem reclama muito geralmente:
+→ Está com sensação de falta de controle
+→ Usa a reclamação como desabafo permanente
+→ Não está tomando ação sobre o que incomoda
+
+O que acontece:
+→ Cria identidade de vítima
+→ Mantém o problema vivo na mente sem sair do lugar
+→ Drena energia própria e de quem ouve
+
+A reclamação identifica que algo está errado.
+O próximo passo é agir — ou aceitar conscientemente que não vai mudar.
+
+#reclamacao #comportamento #mentalidade #crescimento`},
+
+{num:100,cat:"comportamento",catLabel:"😤 Comportamento",hook:"O silêncio que você nunca pratica está custando caro",text:`O silêncio que você nunca pratica está custando caro.
+
+Podcast no ouvido. Notificação. Série. Rede social. Raramente silêncio.
+
+O que o silêncio faz que o barulho não faz:
+→ Permite que ideias se formem completamente
+→ Cria espaço para sentir o que está sendo ignorado
+→ Reduz o ruído mental que fragmenta a atenção
+→ É onde a criatividade vive
+
+Quando você está sempre consumindo, nunca está processando.
+
+Tenta 10 minutos sem nada amanhã de manhã. O que aparecer vai te surpreender.
+
+#silencio #mentalidade #atencao #comportamento`},
+
+// ── VIRAL (20) ────────────────────────────────────────────────
+{num:101,cat:"viral",catLabel:"🔥 Viral",hook:"A frase que mudou minha forma de encarar dinheiro",text:`A frase que mudou minha forma de encarar dinheiro.
+
+"Não é o que você ganha. É o que você guarda."
+
+O que essa frase destrói:
+→ A crença de que precisa ganhar mais para começar a guardar
+→ A ideia de que guardar pouco não vale a pena
+
+Conheço pessoas que ganharam R$ 30.000 por mês e não têm nada.
+Conheço pessoas que ganham R$ 3.000 e têm reserva e investimento.
+
+A diferença não está no salário. Está na decisão.
+
+#dinheiro #financas #habitos #mentalidade`},
+
+{num:102,cat:"viral",catLabel:"🔥 Viral",hook:"Você tem 24 horas. Igual a qualquer pessoa que admira",text:`Você tem 24 horas. Igual a qualquer pessoa que admira.
+
+Elon Musk: 24 horas.
+O maior empreendedor que você conhece: 24 horas.
+Você: 24 horas.
+
+O que é diferente:
+→ Como cada hora é usada
+→ Quanto tempo vai para consumo vs. criação
+→ Quanto vai para distração vs. desenvolvimento
+
+Não é sobre ter mais tempo. É sobre usar diferente o que você tem.
+
+Pergunta honesta: nas últimas 24 horas, você investiu ou consumiu mais?
+
+#tempo #produtividade #mentalidade #crescimento`},
+
+{num:103,cat:"viral",catLabel:"🔥 Viral",hook:"O que vai acontecer com você daqui a 10 anos se nada mudar",text:`O que vai acontecer com você daqui a 10 anos se nada mudar.
+
+Se você continuar exatamente como está:
+→ Os mesmos hábitos vão gerar os mesmos resultados
+→ As mesmas dívidas vão crescer com os mesmos juros
+→ O mesmo emprego que você não gosta vai seguir igual
+
+E a versão alternativa:
+
+Se você mudar uma coisa por mês durante 10 anos:
+→ 120 mudanças pequenas criam uma vida completamente diferente
+→ Hábitos compostos têm efeito exponencial
+
+Você não decide seu futuro de uma vez. Decide em parcelas diárias.
+
+#futuro #mudanca #mentalidade #crescimento`},
+
+{num:104,cat:"viral",catLabel:"🔥 Viral",hook:"O que ninguém fala sobre começar do zero",text:`O que ninguém fala sobre começar do zero.
+
+Todo mundo celebra quem venceu. Ninguém mostra o meio.
+
+O que acontece no começo que ninguém conta:
+→ Você trabalha muito e ganha pouco
+→ Você erra mais do que acerta
+→ As pessoas ao redor duvidam
+→ O resultado demora mais do que você planejou
+→ Você vai querer parar várias vezes
+
+E ainda assim vale.
+
+Começar do zero significa que tudo que você construir será seu.
+
+#comecar #empreendedorismo #mentalidade #recomecar`},
+
+{num:105,cat:"viral",catLabel:"🔥 Viral",hook:"Você gasta mais com o celular do que com a sua saúde",text:`Você gasta mais com o celular do que com a sua saúde.
+
+Gasto com celular em 4 anos: facilmente R$ 10.000.
+Gasto com saúde preventiva: a maioria não vai ao médico enquanto não dói.
+
+A lógica:
+→ Celular: você cuida, troca, protege com capinha
+→ Corpo: você ignora até quebrar
+
+O celular pode ser substituído. O corpo, não.
+
+#saude #dinheiro #prioridades #comportamento`},
+
+{num:106,cat:"viral",catLabel:"🔥 Viral",hook:"A mentira que te venderam sobre faculdade",text:`A mentira que te venderam sobre faculdade.
+
+"Faz faculdade que você vai ter emprego garantido."
+
+A realidade de 2024:
+→ Mais de 55% dos formados trabalham em áreas diferentes da graduação
+→ O diploma abre porta — mas quem entra é você
+→ Cursos rápidos e especializações superam graduações em velocidade de resultado
+
+Isso não significa que faculdade é inútil.
+
+Significa que o diploma sem capacidade prática, sem rede de contatos e sem habilidades comportamentais não garante nada.
+
+O que realmente emprega: o que você sabe fazer, não o papel que você tem.
+
+#faculdade #educacao #carreira #mentalidade`},
+
+{num:107,cat:"viral",catLabel:"🔥 Viral",hook:"Dívida boa vs. dívida ruim: a diferença que os ricos conhecem",text:`Dívida boa vs. dívida ruim: a diferença que os ricos conhecem.
+
+Dívida ruim:
+→ Financia consumo que deprecia — carro, eletrônico, roupas
+→ Tem juros altos
+→ Diminui seu patrimônio
+
+Dívida boa:
+→ Financia ativo que gera renda
+→ Tem juros menores que o retorno gerado
+→ Aumenta seu patrimônio no longo prazo
+
+A regra simples:
+→ Se a dívida te gera mais do que custa: pode ser boa
+→ Se a dívida só te custa: é ruim
+
+Use crédito para construir, não para consumir.
+
+#divida #financas #investimentos #mentalidade`},
+
+{num:108,cat:"viral",catLabel:"🔥 Viral",hook:"O que mais faz falta quando o dinheiro some",text:`O que mais faz falta quando o dinheiro some.
+
+Não é o luxo. É a opção.
+
+Quando você tem dinheiro, tem escolhas:
+→ Pode dizer não para um trabalho ruim
+→ Pode mudar de cidade se quiser
+→ Pode pagar um médico sem esperar fila
+
+Quando não tem:
+→ Aceita o que vier porque precisa
+→ Fica preso onde está
+→ Vive com ansiedade de fundo constante
+
+Dinheiro não compra felicidade. Mas compra liberdade de escolha.
+
+E liberdade de escolha é o que mais afeta a qualidade de vida.
+
+#dinheiro #liberdade #financas #mentalidade`},
+
+{num:109,cat:"viral",catLabel:"🔥 Viral",hook:"Você vai arrepender de não ter começado antes — em tudo",text:`Você vai arrepender de não ter começado antes — em tudo.
+
+O que as pessoas mais velhas lamentam:
+→ Não terem começado a investir mais cedo
+→ Não terem cuidado da saúde quando era fácil manter
+→ Não terem arriscado no negócio que ficou só na cabeça
+→ Não terem passado mais tempo com as pessoas certas
+
+O denominador comum: não ter começado.
+
+O melhor momento para plantar uma árvore foi há 20 anos.
+O segundo melhor momento é hoje.
+
+#arrependimento #acao #mentalidade #comecar`},
+
+{num:110,cat:"viral",catLabel:"🔥 Viral",hook:"O que o seu eu de 10 anos atrás diria sobre hoje?",text:`O que o seu eu de 10 anos atrás diria sobre hoje?
+
+Ficaria orgulhoso? Surpreso? Decepcionado?
+
+10 anos é tempo suficiente para:
+→ Aprender um idioma fluente
+→ Construir uma reserva sólida
+→ Mudar de carreira completamente
+→ Montar um negócio do zero
+
+Se você olha para os últimos 10 anos e não vê progresso suficiente — essa informação é valiosa. Não para punição. Para recalibrar.
+
+Agora a pergunta contrária: o que seu eu de 10 anos no futuro precisaria que você fizesse hoje?
+
+#reflexao #crescimento #mentalidade #tempo`},
+
+{num:111,cat:"viral",catLabel:"🔥 Viral",hook:"O que acontece com sua mente quando você para de usar rede social por 7 dias",text:`O que acontece com sua mente quando você para de usar rede social por 7 dias.
+
+Dias 1-2: Ansiedade sem motivo. Vontade compulsiva de pegar o celular.
+
+Dias 3-4: O vazio começa a ser preenchido — livro, conversa real, silêncio.
+
+Dias 5-6: Pensamento mais claro. Menos comparação automática.
+
+Dia 7: "O que eu estava consumindo e por quê?"
+
+Não é sobre abandonar. É sobre perceber o quanto consome sem perceber.
+
+#redessociais #desintoxicacao #mentalidade #bem-estar`},
+
+{num:112,cat:"viral",catLabel:"🔥 Viral",hook:"Você não é preguiçoso. Você está esgotado",text:`Você não é preguiçoso. Você está esgotado.
+
+Sinais de esgotamento que parecem preguiça:
+→ Dificuldade de começar qualquer tarefa
+→ Procrastinação mesmo com coisas que você gosta
+→ Sensação de que nada vale o esforço
+→ Dificuldade de concentração
+
+O que não resolve esgotamento:
+→ Se cobrar mais
+→ Culpa e autocobrança
+
+O que resolve:
+→ Descanso real — não scroll no celular
+→ Movimento leve no corpo
+→ Conversa com alguém de confiança
+
+Cuide-se. Rendimento sustentável precisa de recuperação.
+
+#esgotamento #burnout #saude #autocuidado`},
+
+{num:113,cat:"viral",catLabel:"🔥 Viral",hook:"O que separa quem realiza dos que só planejam",text:`O que separa quem realiza dos que só planejam.
+
+Quem só planeja:
+→ O plano precisa ser perfeito antes de começar
+→ Aguarda condições ideais
+→ Tem projetos belos no papel e inexistentes na realidade
+
+Quem realiza:
+→ Faz o plano mínimo viável e começa
+→ Ajusta no caminho com dados reais
+→ Entende que ação imperfeita bate planejamento perfeito parado
+
+A linha entre planejar e procrastinar é tênue.
+
+A pergunta que revela onde você está: "Quando você vai começar?"
+
+#planejamento #acao #produtividade #mentalidade`},
+
+{num:114,cat:"viral",catLabel:"🔥 Viral",hook:"Esse número muda tudo na sua vida financeira",text:`Esse número muda tudo na sua vida financeira.
+
+Score de crédito.
+
+O que ele afeta:
+→ Se você consegue financiamento ou empréstimo
+→ Qual taxa de juros você paga
+→ Se consegue alugar um imóvel
+→ Às vezes: se consegue o emprego
+
+Como subir o score:
+→ Pague contas no prazo — qualquer conta
+→ Mantenha CPF limpo
+→ Não use 100% do limite do cartão sempre
+→ Tenha relacionamento com banco
+
+Score acima de 700: boas condições.
+Score acima de 900: elite do crédito.
+
+#score #credito #serasa #financas`},
+
+{num:115,cat:"viral",catLabel:"🔥 Viral",hook:"Por que pessoas bem-sucedidas protegem o sono acima de tudo",text:`Por que pessoas bem-sucedidas protegem o sono acima de tudo.
+
+Não é preguiça. É estratégia.
+
+O que acontece em 7-8 horas de sono de qualidade:
+→ O cérebro consolida memória e aprendizado
+→ Hormônios de recuperação são liberados
+→ Criatividade e resolução de problema aumentam
+
+O que acontece com sono ruim crônico:
+→ Tomada de decisão prejudicada — igual a estar bêbado
+→ Aumento de cortisol
+→ Maior risco de depressão e ansiedade
+
+Dormir pouco não é sinal de dedicação. É sinal de má gestão.
+
+#sono #saude #performance #mentalidade`},
+
+{num:116,cat:"viral",catLabel:"🔥 Viral",hook:"O que acontece quando você para de buscar aprovação",text:`O que acontece quando você para de buscar aprovação.
+
+O que você perde:
+→ A ansiedade de não saber o que os outros pensam
+→ A paralisia de agir por medo de julgamento
+→ O desgaste de manter uma imagem que não é sua
+
+O que você ganha:
+→ Decisões mais rápidas e autênticas
+→ Autoconfiança que vem de dentro, não de fora
+
+A busca por aprovação é uma armadilha porque nunca acaba. Sempre tem alguém novo para impressionar.
+
+A única aprovação que resolve alguma coisa é a sua própria.
+
+#aprovacao #autoestima #mentalidade #autenticidade`},
+
+{num:117,cat:"viral",catLabel:"🔥 Viral",hook:"O que acontece quando você para de reclamar por 30 dias",text:`O que acontece quando você para de reclamar por 30 dias.
+
+A regra: toda vez que for reclamar, substitua por uma ação ou por silêncio.
+
+O que acontece:
+→ Você percebe o quanto reclamava sem perceber
+→ A energia que ia para reclamação vai para outra coisa
+→ As pessoas ao redor percebem a diferença
+
+Efeito colateral mais surpreendente:
+→ Gratidão aumenta
+→ Ansiedade diminui
+→ Relacionamentos melhoram
+
+Não é sobre fingir que está tudo bem. É sobre escolher onde colocar atenção.
+
+#reclamacao #gratidao #mentalidade #desafio`},
+
+{num:118,cat:"viral",catLabel:"🔥 Viral",hook:"Você sabe o que é liquidez — e por que isso importa para o seu dinheiro",text:`Você sabe o que é liquidez — e por que isso importa para o seu dinheiro.
+
+Liquidez = velocidade com que você transforma investimento em dinheiro disponível.
+
+Alta liquidez:
+→ Tesouro Selic: resgata em 1 dia útil
+→ CDB liquidez diária: disponível em 24h
+
+Baixa liquidez:
+→ Imóvel: pode demorar meses para vender
+→ Previdência privada: tributação alta se resgatar cedo
+
+Por que importa:
+→ Reserva de emergência DEVE ter alta liquidez
+→ Objetivo de longo prazo pode ter baixa liquidez — e rende mais por isso
+
+Dinheiro preso na hora errada é tão ruim quanto não ter.
+
+#liquidez #investimentos #financas #educacaofinanceira`},
+
+{num:119,cat:"viral",catLabel:"🔥 Viral",hook:"O que você faz nos próximos 90 dias muda os próximos 3 anos",text:`O que você faz nos próximos 90 dias muda os próximos 3 anos.
+
+90 dias é tempo suficiente para:
+→ Criar um hábito sólido
+→ Aprender uma habilidade básica nova
+→ Montar uma reserva inicial
+→ Lançar um projeto que estava só na cabeça
+
+3 anos é tempo suficiente para:
+→ Transformar uma habilidade em fonte de renda
+→ Acumular patrimônio significativo
+→ Construir algo do zero com resultado visível
+
+O problema não é o tamanho do objetivo. É o horizonte de tempo.
+
+O que você vai fazer nos próximos 90 dias?
+
+📍 Goianésia e São Luís do Norte — BR Auto Peças
+📲 Conta pra gente nos comentários
+
+#90dias #metas #mentalidade #crescimento`},
+
+{num:120,cat:"viral",catLabel:"🔥 Viral",hook:"Ninguém te ensinou a ganhar dinheiro. Te ensinaram a trabalhar por ele",text:`Ninguém te ensinou a ganhar dinheiro. Te ensinaram a trabalhar por ele.
+
+Existe uma diferença enorme.
+
+Trabalhar por dinheiro:
+→ Você troca tempo por salário
+→ Se você parar, o dinheiro para
+→ O teto é o número de horas que você tem
+
+Fazer o dinheiro trabalhar por você:
+→ Investimento gerando juros enquanto você dorme
+→ Negócio que opera sem você presente
+→ Ativo gerando renda de forma passiva
+
+A escola te ensinou a ser um ótimo empregado.
+
+Ninguém te ensinou a ser um construtor de patrimônio.
+
+Essa diferença define o resto da sua vida financeira.
+
+#dinheiro #riqueza #financas #mentalidade #educacaofinanceira`}
+];
+
+</script>
+<script>
+function renderCards(filter,search){
+  filter=filter||'all'; search=(search||'').toLowerCase();
+  const grid=document.getElementById('grid');
+  grid.innerHTML='';
+  const catColors={carro:'#00D68F',dinheiro:'#FFD600',imposto:'#FF9500',mentalidade:'#A855F7',economia:'#4D9FFF',comportamento:'#FF6B9D',viral:'#FF3B3B'};
+  let count=0;
+  legends.forEach(l=>{
+    if(filter!=='all'&&l.cat!==filter) return;
+    if(search&&!l.hook.toLowerCase().includes(search)&&!l.text.toLowerCase().includes(search)) return;
+    count++;
+    const color=catColors[l.cat]||'#FFD600';
+    const card=document.createElement('div');
+    card.className='legend-card';
+    card.innerHTML=`<div class="card-top"><div class="card-num">${String(l.num).padStart(3,'0')}</div><div class="card-meta"><div class="card-category" style="color:${color}">${l.catLabel}</div><div class="card-hook">${l.hook}</div></div><button class="copy-btn">📋</button></div><div class="card-body"><div class="legend-text">${fmt(l.text)}</div></div>`;
+    card.querySelector('.copy-btn').addEventListener('click',e=>{e.stopPropagation();cp(l.text);});
+    card.addEventListener('click',()=>cp(l.text));
+    grid.appendChild(card);
+  });
+  if(!count) grid.innerHTML='<div class="no-results">Nenhuma legenda encontrada para essa busca.</div>';
+}
+function fmt(t){return t.split('\n').map((line,i)=>{if(i===0)return`<span class="hook-line">${line}</span>`;if(line.includes('📍')||line.includes('📲')||line.startsWith('#'))return`<span class="cta-line">${line}</span>`;return line;}).join('\n');}
+function cp(text){navigator.clipboard.writeText(text).then(()=>{const t=document.getElementById('copy-toast');t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2000);});}
+let currentFilter='all';
+function filterCards(cat,btn){document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');currentFilter=cat;renderCards(cat,document.querySelector('.search-input').value);}
+function searchCards(val){renderCards(currentFilter,val);}
+renderCards();
+</script>
+</body>
+</html>
